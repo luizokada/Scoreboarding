@@ -1,29 +1,94 @@
 import sys
 import re
+from typing import List, Tuple
 
 
-def lerArq(Lines):
+class UnidadeFuncional:
+    def __init__(self) -> None:
+        self.busy = False
+        self.op = ''
+        self.fi = -1
+        self.fj = -1
+        self.fk = -1
+        self.qj = ''
+        self.qk = ''
+        self.rj = False
+        self.rk = False
+
+    def isBusy(self) -> bool:
+        return self.busy
+
+    def setBusy(self, busy):
+        self.busy = busy
+
+    def isrj(self) -> bool:
+        return self.rj
+
+    def setrj(self, rj):
+        self.rj = rj
+
+    def isrk(self) -> bool:
+        return self.rk
+
+    def setrj(self, rk):
+        self.rk = rk
+
+    def setOP(self, OP):
+        self.op = OP
+
+    def getOP(self):
+        return self.op
+
+    def setfi(self, fi):
+        self.fi = fi
+
+    def getfi(self):
+        return self.op
+
+    def setfj(self, fj):
+        self.fj = fj
+
+    def getfj(self):
+        return self.fj
+
+    def setfk(self, fk):
+        self.fk = fk
+
+    def getOP(self):
+        return self.op
+
+    def setqj(self, qj):
+        self.qj = qj
+
+    def getqj(self):
+        return self.qj
+
+    def setqk(self, qk):
+        self.qk = qk
+
+    def getqj(self):
+        return self.qk
+    pass
+
+
+def lerArq(nome_arq):
     operacoes = []
-    operacoes1 = []
+    arquivo = open(nome_arq, 'r')
+    Lines = arquivo.read().splitlines()
     for i in range(len(Lines)):
         operacoes.append(Lines[i].split(' ', 1))
         operacoes[i][1] = operacoes[i][1].split(',')
+        if operacoes[i][0] == 'ld':
+            aux = operacoes[i][1][1]
+            aux = aux.split(')')
+            aux[0].removeprefix('(')
+            print(aux)
+            operacoes[i][1] = aux
     print(operacoes)
     return operacoes
 
 
 def read_operands(operacoes):
-    registradores = []
-    for j in range(len(operacoes)):
-        for i in range(len(operacoes[j][1])):
-            if operacoes[j][0] != "ld":
-                operacoes[j][1][i] = re.sub('[^0-9]', '', operacoes[j][1][i])
-                registradores.append(re.sub('[^0-9]', '', operacoes[j][1][i]))
-            else:
-                operacoes[j][1][0] = re.sub('[^0-9]', '', operacoes[j][1][0])
-                operacoes[j][1][1] = operacoes[j][1][1].removeprefix(' (')
-                operacoes[j][1][1] = operacoes[j][1][1].removesuffix('rb')
-                operacoes[j][1][1] = operacoes[j][1][1].removesuffix(')')
     return operacoes
 
 
@@ -36,17 +101,11 @@ def write_results(nome_arq, operacoes):
     saida = nome_arq[1]
     saida = saida+'.out'
     arquivo = open(saida, 'w')
-    print(operacoes)
 
 
 def main():
-    registradores = [0]*13
-    nome_arq = sys.argv[1]
-    arquivo = open(nome_arq, 'r')
-    Lines = arquivo.readlines()
-    operacoes = lerArq(Lines)
-    operacoes = read_operands(operacoes)
-    write_results(nome_arq, operacoes)
+    operacoes = lerArq(sys.argv[1])
+    write_results(sys.argv[1], operacoes)
     return 0
 
 
