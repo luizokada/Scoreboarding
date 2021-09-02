@@ -216,49 +216,49 @@ registradoresStatus[13]=rb
 '''
 
 
-def issue(operacoes: List[operacoesStatus], unidadesFuncionais: List[UnidadeFuncionalStatus], registradores: List[str], pc: int, clock: int):
-    if not isWAW(unidadesFuncionais, operacoes, pc) and operacoes[pc].getIssue() == -1:
-        if operacoes[pc].getOP() == 'ld':
+def issue(operacao: operacoesStatus, unidadesFuncionais: List[UnidadeFuncionalStatus], registradores: List[str], pc: int, clock: int, statusOPs: List[operacoesStatus]):
+    if not isWAW(unidadesFuncionais, operacao, pc):
+        if operacao.getOP() == 'ld':
             UF = 0
-        elif operacoes[pc].getOP() == 'multd':
+        elif operacao.getOP() == 'multd':
             if not unidadesFuncionais[1].isBusy():
                 UF = 1
             else:
                 UF = 2
-        elif operacoes[pc].getOP() == 'addd' or operacoes[pc].getOP() == 'subd':
+        elif operacao.getOP() == 'addd' or operacao.getOP() == 'subd':
             UF = 3
-        elif operacoes[pc].getOP() == 'divd':
+        elif operacao.getOP() == 'divd':
             UF = 4
+        else:
+            return pc
         if not unidadesFuncionais[UF].isBusy():
-            unidadesFuncionais[UF].setOP(operacoes[pc].getOP())
-            unidadesFuncionais[UF].setfi(operacoes[pc].getfi())
-            unidadesFuncionais[UF].setfk(operacoes[pc].getfk())
+            unidadesFuncionais[UF].setOP(operacao.getOP())
+            unidadesFuncionais[UF].setfi(operacao.getfi())
+            unidadesFuncionais[UF].setfk(operacao.getfk())
             unidadesFuncionais[UF].setpc(pc)
             registradores[int(
-                re.sub('[^0-9]', '', operacoes[pc].getfi()))] = unidadesFuncionais[UF].getNome()
+                re.sub('[^0-9]', '', operacao.getfi()))] = unidadesFuncionais[UF].getNome()
             try:
-                int(operacoes[pc].getfj())
+                int(operacao.getfj())
                 unidadesFuncionais[UF].setqj('')
                 unidadesFuncionais[UF].setfj('')
-                if operacoes[pc].getfk() == 'rb':
+                if operacao.getfk() == 'rb':
                     unidadesFuncionais[UF].setqk(registradores[13])
                 else:
                     unidadesFuncionais[UF].setqk(
-                        registradores[int(re.sub('[^0-9]', '', operacoes[pc].getfk()))])
+                        registradores[int(re.sub('[^0-9]', '', operacao.getfk()))])
             except ValueError:
-                unidadesFuncionais[UF].setfj(operacoes[pc].getfj())
+                unidadesFuncionais[UF].setfj(operacao.getfj())
                 unidadesFuncionais[UF].setqk(
-                    registradores[int(re.sub('[^0-9]', '', operacoes[pc].getfk()))])
+                    registradores[int(re.sub('[^0-9]', '', operacao.getfk()))])
                 unidadesFuncionais[UF].setqj(
-                    registradores[int(re.sub('[^0-9]', '', operacoes[pc].getfj()))])
+                    registradores[int(re.sub('[^0-9]', '', operacao.getfj()))])
             unidadesFuncionais[UF].setBusy(True)
-            operacoes[pc].setIssue(clock)
-            if pc == len(operacoes)-1:
-                return pc
-            else:
-                return pc+1
-    else:
-        return pc
+            statusOPs.append(operacao)
+            statusOPs[pc].setIssue(clock)
+            return pc+1
+        else:
+            return pc
 
 
 def read_operands(operacoes: List[operacoesStatus], unidadesFuncionais: List[UnidadeFuncionalStatus],  clock: int):
@@ -303,9 +303,6 @@ def writeResults(unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: Li
                     operacoes[unidadesFuncionais[i].getpc()].setEscrita(clock)
                     operacoes[unidadesFuncionais[i].getpc()
                               ].setFinalizada(True)
-                    registradores[int(
-                        re.sub('[^0-9]', '', operacoes[unidadesFuncionais[i].getpc()].getfi()))] = ''
-                    unidadesFuncionais[i].reset()
     return
 
 
@@ -343,8 +340,8 @@ def canExecute(unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List
     return
 
 
-def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus], pc: int) -> bool:
-    if pc < len(operacoes)-1:
+def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) -> bool:
+    if pc < len(memoria)-1:
         return True
     for i in range(len(unidadesFuncionais)):
         if unidadesFuncionais[i].isBusy():
@@ -356,10 +353,10 @@ def scoreboarding(operacoes):
     pc = 0
     clock = 1
     registradoresStatus = ['']*14
-    unidadesFuncionais = [UnidadeFuncionalStatus() for i in range(5)]
+    unidadesFuncionais = [UnidadeFuncionalStatus() for _ in range(5)]
     unidadesFuncionais[0].setNome('Integer')
     unidadesFuncionais[1].setNome('Mult1')
-    unidadesFuncionais[2].setNome('mult2')
+    unidadesFuncionais[2].setNome('Mult2')
     unidadesFuncionais[3].setNome('Add')
     unidadesFuncionais[4].setNome('Divide')
     while isVazio(unidadesFuncionais, operacoes, pc):
@@ -374,33 +371,30 @@ def scoreboarding(operacoes):
     return
 
 
-def setOPs(Lines) -> List[operacoesStatus]:
-    statusop = [operacoesStatus() for i in range(len(Lines))]
-    for i in range(len(Lines)):
-        aux = operacoesStatus()
-        statusop[i].setOP(Lines[i][0])
-        statusop[i].setfi(Lines[i][1][0])
-        statusop[i].setfj(Lines[i][1][1])
-        statusop[i].setfk(Lines[i][1][2])
+def buscaOp(Lines, pc) -> List[operacoesStatus]:
+    statusop = operacoesStatus()
+    if pc < len(Lines):
+        statusop.setOP(Lines[pc][0])
+        statusop.setfi(Lines[pc][1][0])
+        statusop.setfj(Lines[pc][1][1])
+        statusop.setfk(Lines[pc][1][2])
     return statusop
 
 
 def lerArq(nome_arq):
-    statusop = []
     try:
         arquivo = open(nome_arq, 'r')
-        Lines = arquivo.read().splitlines()
-        for i in range(len(Lines)):
-            Lines[i] = Lines[i].split(' ', 1)
-            Lines[i][1] = Lines[i][1].split(',')
-            if Lines[i][0] == 'ld':
-                aux = Lines[i][1][1]
+        memoria = arquivo.read().splitlines()
+        for i in range(len(memoria)):
+            memoria[i] = memoria[i].split(' ', 1)
+            memoria[i][1] = memoria[i][1].split(',')
+            if memoria[i][0] == 'ld':
+                aux = memoria[i][1][1]
                 aux = aux.split(')')
                 aux[0] = aux[0].replace('(', '')
-                Lines[i][1][1] = aux[0]
-                Lines[i][1].append(aux[1])
-        statusop = setOPs(Lines)
-        return statusop
+                memoria[i][1][1] = aux[0]
+                memoria[i][1].append(aux[1])
+        return memoria
     except FileNotFoundError:
         print("O arquivo nao existe tente executar novamente")
         exit()
@@ -413,9 +407,61 @@ def writestatus(nome_arq):
     arquivo = open(saida, 'w')
 
 
+def pipeline(memoria):
+    pc = 0
+    clock = 1
+    regBusca = operacoesStatus()
+    registradoresStatus = ['']*14
+    unidadesFuncionais = [UnidadeFuncionalStatus() for _ in range(5)]
+    statusOP = []
+    unidadesFuncionais[0].setNome('Integer')
+    unidadesFuncionais[1].setNome('Mult1')
+    unidadesFuncionais[2].setNome('Mult2')
+    unidadesFuncionais[3].setNome('Add')
+    unidadesFuncionais[4].setNome('Divide')
+    regBusca = buscaOp(memoria, pc)
+    clock = clock+1
+    pc = issue(regBusca, unidadesFuncionais,
+               registradoresStatus, pc, clock, statusOP)
+    buscaOp(memoria, pc)
+    clock = clock+1
+    canRead(unidadesFuncionais, statusOP, registradoresStatus)
+    read_operands(statusOP, unidadesFuncionais, clock)
+    pc = issue(regBusca, unidadesFuncionais,
+               registradoresStatus, pc, clock, statusOP)
+    regBusca = buscaOp(memoria, pc)
+    clock = clock+1
+    canExecute(unidadesFuncionais, statusOP)
+    execution(statusOP, unidadesFuncionais, clock)
+    canRead(unidadesFuncionais, statusOP, registradoresStatus)
+    read_operands(statusOP, unidadesFuncionais, clock)
+    pc = issue(regBusca, unidadesFuncionais,
+               registradoresStatus, pc, clock, statusOP)
+    regBusca = buscaOp(memoria, pc)
+    while isVazio(unidadesFuncionais, memoria, pc):
+        clock = clock+1
+        writeResults(unidadesFuncionais, statusOP, registradoresStatus, clock)
+        canExecute(unidadesFuncionais, statusOP)
+        execution(statusOP, unidadesFuncionais, clock)
+        canRead(unidadesFuncionais, statusOP, registradoresStatus)
+        read_operands(statusOP, unidadesFuncionais, clock)
+        pc = issue(regBusca, unidadesFuncionais,
+                   registradoresStatus, pc, clock, statusOP)
+        regBusca = buscaOp(memoria, pc)
+        for i in range(len(unidadesFuncionais)):
+            if unidadesFuncionais[i].isBusy():
+                if statusOP[unidadesFuncionais[i].getpc()].getEscrita() != -1:
+                    registradoresStatus[int(
+                        re.sub('[^0-9]', '', statusOP[unidadesFuncionais[i].getpc()].getfi()))] = ''
+                    unidadesFuncionais[i].reset()
+
+    return
+
+
 def main():
-    operacoes = lerArq(sys.argv[1])
-    scoreboarding(operacoes)
+    memoria = lerArq(sys.argv[1])
+    pipeline(memoria)
+    # scoreboarding(operacoes)
     writestatus(sys.argv[1])
     return 0
 
