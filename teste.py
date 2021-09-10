@@ -602,6 +602,8 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
     for i in range(len(unidadesFuncionais)):
         if i == 3:
             arquivo.write(unidadesFuncionais[i].getNome()+'  \t|')
+        elif i == 0:
+            arquivo.write(unidadesFuncionais[i].getNome()+'|')
         else:
             arquivo.write(unidadesFuncionais[i].getNome()+'\t|')
         if unidadesFuncionais[i].isBusy():
