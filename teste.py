@@ -473,7 +473,6 @@ def writeResults(scoreboarding: scoreBoarding, clock: int):
                 scoreboarding.setReg(int(
                     re.sub('[^0-9]', '', scoreboarding.getUF(i).getfi())), '')
                 scoreboarding.getUF(i).reset()
-
     return alterados
 
 
@@ -492,7 +491,7 @@ def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) 
 
 
 '''
-Fução que busca a operaç~o na memória
+Fução que busca a operação na memória
 É o estágio de busca do pipeline
 '''
 
@@ -699,13 +698,6 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
 
 '''
 Funçao que representa o simulador do pipeline
-unidadeFuncionais[0] = Intenger
-unidadeFuncionais[1] = Mult1
-unidadeFuncionais[2] = Mult2
-unidadeFuncionais[3] = add
-unidadeFuncionais[4] = Divide
-registradoresStatus[0]....[12] = r0....r12
-registradoresStatus[13] = rb
 
 '''
 
