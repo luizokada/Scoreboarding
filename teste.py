@@ -8,6 +8,31 @@ RA:107247
 Trabalho 1 Arquitetura de Organização de computadores
 '''
 
+
+'''
+Registrador do estágio escrita
+'''
+
+
+class regEscrita:
+    def __init__(self) -> None:
+        self.registradores = []
+        self.UF = []
+
+    def setRegistrdor(self, reg: int):
+        self.registradores.append(reg)
+
+    def setUF(self, reg: int):
+        self.UF.append(reg)
+
+    def getUF(self):
+        return self.UF
+
+    def getRef(self):
+        return self.registradores
+        pass
+
+
 '''
 Classe que representa os status das unidade funcionais
 '''
@@ -31,19 +56,19 @@ class UnidadeFuncionalStatus:
     def isBusy(self) -> bool:
         return self.busy
 
-    def setBusy(self, busy):
+    def setBusy(self, busy: bool):
         self.busy = busy
 
     def isrj(self) -> bool:
         return self.rj
 
-    def setrj(self, rj):
+    def setrj(self, rj: bool):
         self.rj = rj
 
     def isrk(self) -> bool:
         return self.rk
 
-    def setrk(self, rk):
+    def setrk(self, rk: bool):
         self.rk = rk
 
     def setOP(self, op):
@@ -52,7 +77,7 @@ class UnidadeFuncionalStatus:
     def getOP(self):
         return self.op
 
-    def setNome(self, nome):
+    def setNome(self, nome: str):
         self.nome = nome
 
     def getNome(self):
@@ -91,7 +116,7 @@ class UnidadeFuncionalStatus:
     def getpc(self):
         return self.pc
 
-    def setpc(self, pc):
+    def setpc(self, pc: int):
         self.pc = pc
     '''
     define os atributos do objeto como ele foi criado
@@ -128,7 +153,7 @@ class operacoesStatus:
         self.escrita = -1
         self.finalizada = False
     '''
-    Sets e gets dessa classe 
+    Sets e gets dessa classe
     '''
 
     def isFinalizada(self):
@@ -161,25 +186,25 @@ class operacoesStatus:
     def getfk(self):
         return self.fk
 
-    def setIssue(self, issue):
+    def setIssue(self, issue: int):
         self.issue = issue
 
     def getIssue(self):
         return self.issue
 
-    def setLeitura(self, leitura):
+    def setLeitura(self, leitura: int):
         self.leitura = leitura
 
     def getLeitura(self):
         return self.leitura
 
-    def setExecucaoi(self, execucaoi):
+    def setExecucaoi(self, execucaoi: int):
         self.execucaoi = execucaoi
 
     def getExecucaoi(self):
         return self.execucaoi
 
-    def setExecucaof(self, execucaof):
+    def setExecucaof(self, execucaof: int):
         self.execucaof = execucaof
 
     def getExecucaof(self):
@@ -203,149 +228,55 @@ class operacoesStatus:
 
 
 '''
-Verifica se existe o Hazzard WAW
-'''
-
-
-def isWAW(operacao: operacoesStatus, registradores: List[str]):
-    if operacao.getfi() == 'rb':
-        if registradores[13] == '':
-            return False
-        else:
-            return True
-    elif registradores[int(re.sub('[^0-9]', '', operacao.getfi()))] == '':
-        return False
-    else:
-        return True
+Classe que representa o scoreboarding
 
 
 '''
-Verifica se existe o Hazzard WAR
-'''
 
 
-def isWAR(unidadeFuncional: UnidadeFuncionalStatus, unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus]):
-    for i in range(len(unidadesFuncionais)):
-        if unidadeFuncional.getfi() == unidadesFuncionais[i].getfj() or unidadeFuncional.getfi() == unidadesFuncionais[i].getfk():
-            if operacoes[unidadesFuncionais[i].getpc()].getLeitura() == -1 and unidadesFuncionais[i].getpc() < unidadeFuncional.getpc():
-                return True
-    return False
+class scoreBoarding:
+    def __init__(self) -> None:
+        '''
+        unidadeFuncionais[0] = Intenger
+        unidadeFuncionais[1] = Mult1
+        unidadeFuncionais[2] = Mult2
+        unidadeFuncionais[3] = add
+        unidadeFuncionais[4] = Divide
+        registradoresStatus[0]....[12] = r0....r12
+        registradoresStatus[13] = rb
+        '''
+        self.unidadeFuncionais = [UnidadeFuncionalStatus() for _ in range(5)]
+        self.unidadeFuncionais[0].setNome('Integer')
+        self.unidadeFuncionais[1].setNome('Mult1')
+        self.unidadeFuncionais[2].setNome('Mult2')
+        self.unidadeFuncionais[3].setNome('Add')
+        self.unidadeFuncionais[4].setNome('Divide')
+        self.statusOp = []
+        self.registradores = ['']*14
 
+    def getUFs(self):
+        return self.unidadeFuncionais
 
-'''
-Funçao que emite uma operção 
-'''
+    def getUF(self, UF: int):
+        return self.unidadeFuncionais[UF]
 
+    def getOPs(self):
+        return self.statusOp
 
-def issue(operacao: operacoesStatus, unidadesFuncionais: List[UnidadeFuncionalStatus], registradores: List[str], pc: int, clock: int, statusOPs: List[operacoesStatus]):
-    if operacao.isVazio():
-        return pc
-    elif not isWAW(operacao, registradores):
-        if operacao.getOP() == 'ld':
-            UF = 0
-        elif operacao.getOP() == 'multd':
-            if not unidadesFuncionais[1].isBusy():
-                UF = 1
-            else:
-                UF = 2
-        elif operacao.getOP() == 'addd' or operacao.getOP() == 'subd':
-            UF = 3
-        elif operacao.getOP() == 'divd':
-            UF = 4
-        else:
-            return pc
-        if not unidadesFuncionais[UF].isBusy():
-            unidadesFuncionais[UF].setOP(operacao.getOP())
-            unidadesFuncionais[UF].setfi(operacao.getfi())
-            unidadesFuncionais[UF].setfk(operacao.getfk())
-            unidadesFuncionais[UF].setpc(pc)
-            registradores[int(
-                re.sub('[^0-9]', '', operacao.getfi()))] = unidadesFuncionais[UF].getNome()
-            try:
-                int(operacao.getfj())
-                unidadesFuncionais[UF].setqj('')
-                unidadesFuncionais[UF].setfj('')
-                if operacao.getfk() == 'rb':
-                    unidadesFuncionais[UF].setqk(registradores[13])
-                else:
-                    unidadesFuncionais[UF].setqk(
-                        registradores[int(re.sub('[^0-9]', '', operacao.getfk()))])
-            except ValueError:
-                unidadesFuncionais[UF].setfj(operacao.getfj())
-                unidadesFuncionais[UF].setqk(
-                    registradores[int(re.sub('[^0-9]', '', operacao.getfk()))])
-                unidadesFuncionais[UF].setqj(
-                    registradores[int(re.sub('[^0-9]', '', operacao.getfj()))])
-            unidadesFuncionais[UF].setBusy(True)
-            statusOPs.append(operacao)
-            statusOPs[pc].setIssue(clock)
-            return pc+1
-        else:
-            return pc
-    else:
-        return pc
+    def getOP(self, i: int):
+        return self.statusOp[i]
 
+    def getRegs(self):
+        return self.registradores
 
-'''
-Funçao que executa a leitura do operandos de um operação que esta em uma UF
-'''
+    def getReg(self, i: int):
+        return self.registradores[i]
 
+    def setReg(self, i: int, nome: str):
+        self.registradores[i] = nome
 
-def read_operands(operacoes: List[operacoesStatus], unidadesFuncionais: List[UnidadeFuncionalStatus], registradores: List[str],  clock: int):
-    canRead(unidadesFuncionais, operacoes, registradores)
-    for i in range(len(unidadesFuncionais)):
-        if unidadesFuncionais[i].isBusy():
-            if unidadesFuncionais[i].isrj() and unidadesFuncionais[i].isrk():
-                if operacoes[unidadesFuncionais[i].getpc()].getIssue() < clock and operacoes[unidadesFuncionais[i].getpc()].getLeitura() == -1:
-                    operacoes[unidadesFuncionais[i].getpc()].setLeitura(clock)
-    return
-
-
-'''
-Funçao que executa uma operação que esta em uma UF
-'''
-
-
-def execution(operacoes: List[operacoesStatus], unidadesFuncionais: List[UnidadeFuncionalStatus], clock: int):
-    canExecute(unidadesFuncionais, operacoes)
-    for i in range(len(unidadesFuncionais)):
-        if unidadesFuncionais[i].isBusy():
-            if operacoes[unidadesFuncionais[i].getpc()].getLeitura() < clock and operacoes[unidadesFuncionais[i].getpc()].getLeitura() != -1 and operacoes[unidadesFuncionais[i].getpc()].getExecucaof() == -1:
-                if operacoes[unidadesFuncionais[i].getpc()].getExecucaoi() == -1:
-                    operacoes[unidadesFuncionais[i].getpc()
-                              ].setExecucaoi(clock)
-                if unidadesFuncionais[i].getOP() == 'ld':
-                    operacoes[unidadesFuncionais[i].getpc()
-                              ].setExecucaof(clock)
-                elif unidadesFuncionais[i].getOP() == 'addd' or unidadesFuncionais[i].getOP() == 'subd':
-                    if clock - operacoes[unidadesFuncionais[i].getpc()].getExecucaoi() == 1:
-                        operacoes[unidadesFuncionais[i].getpc()
-                                  ].setExecucaof(clock)
-                elif unidadesFuncionais[i].getOP() == 'multd':
-                    if clock - operacoes[unidadesFuncionais[i].getpc()].getExecucaoi() == 9:
-                        operacoes[unidadesFuncionais[i].getpc()
-                                  ].setExecucaof(clock)
-                elif unidadesFuncionais[i].getOP() == 'divd':
-                    if clock - operacoes[unidadesFuncionais[i].getpc()].getExecucaoi() == 39:
-                        operacoes[unidadesFuncionais[i].getpc()
-                                  ].setExecucaof(clock)
-    return
-
-
-'''
-Funçao que escreve os resultados das operações
-'''
-
-
-def writeResults(unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus], registradores: List[str], clock: int):
-    for i in range(len(unidadesFuncionais)):
-        if not isWAR(unidadesFuncionais[i], unidadesFuncionais, operacoes):
-            if unidadesFuncionais[i].isBusy():
-                if operacoes[unidadesFuncionais[i].getpc()].getExecucaof() != -1 and operacoes[unidadesFuncionais[i].getpc()].getExecucaof() < clock:
-                    operacoes[unidadesFuncionais[i].getpc()].setEscrita(clock)
-                    operacoes[unidadesFuncionais[i].getpc()
-                              ].setFinalizada(True)
-    return
+    def setOP(self, OP: operacoesStatus):
+        self.statusOp.append(OP)
 
 
 '''
@@ -370,68 +301,180 @@ def setUF(nome: str):
 
 
 '''
-Verifica o Hazzard RAW
-Funçao que verifica se uma determina operação que está em uma UF pode começar a leitua
-
+Verifica se existe o Hazzard WAW
 '''
 
 
-def canRead(unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus], registradores: List[str]):
+def isWAW(operacao: operacoesStatus, registradores: List[str], regiEscrita: regEscrita):
+    if operacao.getfi() == 'rb':
+        if registradores[13] == '' and 13 not in regiEscrita.getRef():
+            return False
+        else:
+            return True
+    elif registradores[int(re.sub('[^0-9]', '', operacao.getfi()))] == '' and int(re.sub('[^0-9]', '', operacao.getfi())) not in regiEscrita.getRef():
+        return False
+    else:
+        return True
+
+
+'''
+Verifica se existe o Hazzard WAR
+'''
+
+
+def isWAR(unidadeFuncional: UnidadeFuncionalStatus, unidadesFuncionais: List[UnidadeFuncionalStatus]):
     for i in range(len(unidadesFuncionais)):
-        if unidadesFuncionais[i].isBusy() and operacoes[unidadesFuncionais[i].getpc()].getLeitura() == -1:
-            if unidadesFuncionais[i].getfk() == 'rb':
-                unidadesFuncionais[i].setqk(registradores[13])
+        if (unidadeFuncional.getfi() == unidadesFuncionais[i].getfj() and unidadesFuncionais[i].isrj()) or (unidadeFuncional.getfi() == unidadesFuncionais[i].getfk() and unidadesFuncionais[i].isrk()):
+            return True
+    return False
+
+
+'''
+Funçao que emite uma operção
+'''
+
+
+def issue(operacao: operacoesStatus, scoreboarding: scoreBoarding, pc: int, clock: int, regiEscrita: regEscrita):
+    if operacao.isVazio():
+        return pc
+    elif not isWAW(operacao, scoreboarding.getRegs(), regiEscrita):
+        if operacao.getOP() == 'ld':
+            UF = 0
+        elif operacao.getOP() == 'multd':
+            if not scoreboarding.getUF(1).isBusy():
+                UF = 1
             else:
-                unidadesFuncionais[i].setqk(
-                    registradores[int(re.sub('[^0-9]', '',  unidadesFuncionais[i].getfk()))])
-            if unidadesFuncionais[i].getfj() == '':
-                unidadesFuncionais[i].setqj('')
-            else:
-                unidadesFuncionais[i].setqj(
-                    registradores[int(re.sub('[^0-9]', '',  unidadesFuncionais[i].getfj()))])
-            if unidadesFuncionais[i].getfk() == 'rb':
-                UFk = setUF(registradores[13])
-            else:
-                UFk = setUF(
-                    registradores[int(re.sub('[^0-9]', '',  unidadesFuncionais[i].getfk()))])
-            if unidadesFuncionais[i].getfj() == '':
-                UFj = setUF('')
-            else:
-                UFj = setUF(
-                    registradores[int(re.sub('[^0-9]', '',  unidadesFuncionais[i].getfj()))])
-            if UFk == 5:
-                unidadesFuncionais[i].setqk('')
-            else:
-                if operacoes[unidadesFuncionais[UFk].getpc()].getIssue() > operacoes[unidadesFuncionais[i].getpc()].getIssue():
-                    unidadesFuncionais[i].setqk('')
-            if UFj == 5:
-                unidadesFuncionais[i].setqj('')
-            else:
-                if operacoes[unidadesFuncionais[UFj].getpc()].getIssue() > operacoes[unidadesFuncionais[i].getpc()].getIssue():
-                    unidadesFuncionais[i].setqj('')
-            if unidadesFuncionais[i].getqj() == '':
-                unidadesFuncionais[i].setrj(True)
-            else:
-                unidadesFuncionais[i].setrj(False)
-            if unidadesFuncionais[i].getqk() == '':
-                unidadesFuncionais[i].setrk(True)
-            else:
-                unidadesFuncionais[i].setrk(False)
+                UF = 2
+        elif operacao.getOP() == 'addd' or operacao.getOP() == 'subd':
+            UF = 3
+        elif operacao.getOP() == 'divd':
+            UF = 4
+        else:
+            return pc
+        if not scoreboarding.getUF(UF).isBusy() and UF not in regiEscrita.getUF():
+            scoreboarding.getUF(UF).setOP(operacao.getOP())
+            scoreboarding.getUF(UF).setfi(operacao.getfi())
+            scoreboarding.getUF(UF).setfk(operacao.getfk())
+            scoreboarding.getUF(UF).setpc(pc)
+            scoreboarding.setReg(
+                int(re.sub('[^0-9]', '', operacao.getfi())), scoreboarding.getUF(UF).getNome())
+            try:
+                int(operacao.getfj())
+                scoreboarding.getUF(UF).setqj('')
+                scoreboarding.getUF(UF).setfj('')
+                if operacao.getfk() == 'rb':
+                    scoreboarding.getUF(UF).setqk(scoreboarding.getReg(13))
+                else:
+                    scoreboarding.getUF(UF).setqk(scoreboarding.getReg(
+                        int(re.sub('[^0-9]', '', operacao.getfk()))))
+            except ValueError:
+                scoreboarding.getUF(UF).setfj(operacao.getfj())
+                scoreboarding.getUF(UF).setqk(
+                    scoreboarding.getReg(int(re.sub('[^0-9]', '', operacao.getfk()))))
+                scoreboarding.getUF(UF).setqj(
+                    scoreboarding.getReg(int(re.sub('[^0-9]', '', operacao.getfj()))))
+            scoreboarding.getUF(UF).setBusy(True)
+            if scoreboarding.getUF(UF).getqj() != '':
+                scoreboarding.getUF(UF).setrj(False)
+            if scoreboarding.getUF(UF).getqk() != '':
+                scoreboarding.getUF(UF).setrk(False)
+            scoreboarding.setOP(operacao)
+            scoreboarding.getOP(pc).setIssue(clock)
+            return pc+1
+        else:
+            return pc
+    else:
+        return pc
+
+
+'''
+Funçao que executa a leitura do operandos de um operação que esta em uma UF
+'''
+
+
+def read_operands(scoreboarding: scoreBoarding,  clock: int, regiEscrita: regEscrita):
+    for i in range(len(scoreboarding.getUFs())):
+        if scoreboarding.getUF(i).isBusy() and i not in regiEscrita.getUF():
+            if scoreboarding.getUF(i).isrj() and scoreboarding.getUF(i).isrk():
+                if scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getIssue() < clock and scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getLeitura() == -1:
+                    scoreboarding.getOP(scoreboarding.getUF(
+                        i).getpc()).setLeitura(clock)
+                    scoreboarding.getUF(i).setrj(False)
+                    scoreboarding.getUF(i).setrk(False)
     return
 
 
 '''
-Funçao que verifica se uma determina operação que está em uma UF pode começar a execução
+Funçao que executa uma operação que esta em uma UF
 '''
 
 
-def canExecute(unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus]):
-    for i in range(len(unidadesFuncionais)):
-        if unidadesFuncionais[i].isBusy():
-            if operacoes[unidadesFuncionais[i].getpc()].getLeitura() != -1 and operacoes[unidadesFuncionais[i].getpc()].getExecucaoi() == -1:
-                unidadesFuncionais[i].setrj(False)
-                unidadesFuncionais[i].setrk(False)
+def execution(scoreboarding: scoreBoarding, clock: int):
+    for i in range(len(scoreboarding.getUFs())):
+        if scoreboarding.getUF(i).isBusy():
+            if (not scoreboarding.getUF(i).isrj() and not scoreboarding.getUF(i).isrk()) and scoreboarding.getUF(i).getqj() == '' and scoreboarding.getUF(i).getqk() == '':
+                if scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getExecucaoi() == -1:
+                    scoreboarding.getOP(scoreboarding.getUF(
+                        i).getpc()).setExecucaoi(clock)
+                if scoreboarding.getUF(i).getOP() == 'ld' and scoreboarding.getOP(scoreboarding.getUF(
+                        i).getpc()).getExecucaoi() == clock:
+                    scoreboarding.getOP(scoreboarding.getUF(
+                        i).getpc()).setExecucaof(clock)
+                elif scoreboarding.getUF(i).getOP() == 'addd' or scoreboarding.getUF(i).getOP() == 'subd':
+                    if clock - scoreboarding.getOP(scoreboarding.getUF(
+                            i).getpc()).getExecucaoi() == 1:
+                        scoreboarding.getOP(scoreboarding.getUF(
+                            i).getpc()).setExecucaof(clock)
+                elif scoreboarding.getUF(i).getOP() == 'multd':
+                    if clock - scoreboarding.getOP(scoreboarding.getUF(
+                            i).getpc()).getExecucaoi() == 9:
+                        scoreboarding.getOP(scoreboarding.getUF(
+                            i).getpc()).setExecucaof(clock)
+                elif scoreboarding.getUF(i).getOP() == 'divd':
+                    if clock - scoreboarding.getOP(scoreboarding.getUF(
+                            i).getpc()).getExecucaoi() == 39:
+                        scoreboarding.getOP(scoreboarding.getUF(
+                            i).getpc()).setExecucaof(clock)
     return
+
+
+'''
+Funçao que escreve os resultados das operações
+'''
+
+
+def writeResults(scoreboarding: scoreBoarding, clock: int):
+    alterados = regEscrita()
+    for i in range(len(scoreboarding.getUFs())):
+        if not isWAR(scoreboarding.getUF(i), scoreboarding.getUFs()):
+            if scoreboarding.getUF(i).isBusy():
+                if scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getExecucaof() != -1 and scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getExecucaof() < clock:
+                    scoreboarding.getOP(scoreboarding.getUF(
+                        i).getpc()).setEscrita(clock)
+                    scoreboarding.getOP(scoreboarding.getUF(
+                        i).getpc()).setFinalizada(True)
+                    alterados.setRegistrdor(int(
+                        re.sub('[^0-9]', '', scoreboarding.getUF(i).getfi())))
+                    alterados.setUF(i)
+    writestatus(sys.argv[1], scoreboarding.getUFs(),
+                scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
+    for i in range(len(scoreboarding.getUFs())):
+        if scoreboarding.getUF(i).isBusy() and i in alterados.getUF():
+            for j in range(len(scoreboarding.getUFs())):
+                if scoreboarding.getUF(j).getqj() == scoreboarding.getUF(i).getNome():
+                    scoreboarding.getUF(j).setqj('')
+                    scoreboarding.getUF(j).setrj(True)
+                    alterados.setUF(j)
+                if scoreboarding.getUF(j).getqk() == scoreboarding.getUF(i).getNome():
+                    scoreboarding.getUF(j).setqk('')
+                    scoreboarding.getUF(j).setrk(True)
+                    alterados.setUF(j)
+            if scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getEscrita() == clock:
+                scoreboarding.setReg(int(
+                    re.sub('[^0-9]', '', scoreboarding.getUF(i).getfi())), '')
+                scoreboarding.getUF(i).reset()
+
+    return alterados
 
 
 '''
@@ -449,7 +492,7 @@ def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) 
 
 
 '''
-Fução que busca a operaç~o na memória 
+Fução que busca a operaç~o na memória
 É o estágio de busca do pipeline
 '''
 
@@ -462,6 +505,11 @@ def buscaOp(Lines, pc) -> List[operacoesStatus]:
         statusop.setfj(Lines[pc][1][1].strip())
         statusop.setfk(Lines[pc][1][2].strip())
     return statusop
+
+
+'''
+Lê o arquivo de entrada e armazena as instruções na memória
+'''
 
 
 def lerArq(nome_arq):
@@ -488,7 +536,7 @@ def lerArq(nome_arq):
 
 
 '''
-Funçao responsável por escrever o arquivo de saida 
+Funçao responsável por escrever o arquivo de saida
 '''
 
 
@@ -498,9 +546,10 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
     saida = saida+'.out'
     arquivo = open(saida, 'a')
     arquivo.writelines('Clock:'+str(clock)+'\n')
-    arquivo.write('\t\t\tStatus operacoes\n')
-    arquivo.write('\t\t\t     issue      |' +
-                  'read\t|'+'Execution\t|'+'write\t|\n')
+    arquivo.write(
+        '--------------------------Status operacoes-------------------------------\n')
+    arquivo.write(
+        'OP    |Fi  |Fj  |Fk  |issue\t\t|read\t|Execution\t|write\t|\n')
 
     for i in range(len(operacoes)):
         if operacoes[i].getOP() == 'ld':
@@ -530,7 +579,7 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
         else:
             arquivo.write('     ')
         if operacoes[i].getLeitura() != -1:
-            arquivo.write(str(operacoes[i].getLeitura())+'\t|')
+            arquivo.write(str(operacoes[i].getLeitura())+'\t\t|')
         else:
             arquivo.write('\t|')
         if operacoes[i].getExecucaoi() != -1:
@@ -543,7 +592,7 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
         else:
             arquivo.write('\t\t|')
         if operacoes[i].getEscrita() != -1:
-            arquivo.write(str(operacoes[i].getEscrita())+'\t|'+'\n')
+            arquivo.write(str(operacoes[i].getEscrita())+'\t\t|'+'\n')
         else:
             arquivo.write('\t|\n')
     arquivo.write('\n')
@@ -651,7 +700,7 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
 
 
 '''
-Funçao que representa o simulador do pipeline 
+Funçao que representa o simulador do pipeline
 unidadeFuncionais[0] = Intenger
 unidadeFuncionais[1] = Mult1
 unidadeFuncionais[2] = Mult2
@@ -667,57 +716,39 @@ def pipeline(memoria):
     pc = 0
     clock = 1
     regBusca = operacoesStatus()
-    registradoresStatus = ['']*14
-    unidadesFuncionais = [UnidadeFuncionalStatus() for _ in range(5)]
-    statusOP = []
-    unidadesFuncionais[0].setNome('Integer')
-    unidadesFuncionais[1].setNome('Mult1')
-    unidadesFuncionais[2].setNome('Mult2')
-    unidadesFuncionais[3].setNome('Add')
-    unidadesFuncionais[4].setNome('Divide')
+    regiEscrita = regEscrita()
+    scoreboarding = scoreBoarding()
     regBusca = buscaOp(memoria, pc)
-    writestatus(sys.argv[1], unidadesFuncionais,
-                statusOP, registradoresStatus, clock)
+    writestatus(sys.argv[1], scoreboarding.getUFs(),
+                scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
     clock = clock+1
-    pc = issue(regBusca, unidadesFuncionais,
-               registradoresStatus, pc, clock, statusOP)
+    pc = issue(regBusca, scoreboarding, pc, clock, regiEscrita)
     regBusca = buscaOp(memoria, pc)
-    writestatus(sys.argv[1], unidadesFuncionais,
-                statusOP, registradoresStatus, clock)
+    writestatus(sys.argv[1], scoreboarding.getUFs(),
+                scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
     clock = clock+1
-    read_operands(statusOP, unidadesFuncionais, registradoresStatus, clock)
-    pc = issue(regBusca, unidadesFuncionais,
-               registradoresStatus, pc, clock, statusOP)
+    read_operands(scoreboarding, clock, regiEscrita)
+    pc = issue(regBusca, scoreboarding, pc, clock, regiEscrita)
     regBusca = buscaOp(memoria, pc)
-    writestatus(sys.argv[1], unidadesFuncionais,
-                statusOP, registradoresStatus, clock)
+    writestatus(sys.argv[1], scoreboarding.getUFs(),
+                scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
     clock = clock+1
-    execution(statusOP, unidadesFuncionais, clock)
-    read_operands(statusOP, unidadesFuncionais, registradoresStatus, clock)
-    pc = issue(regBusca, unidadesFuncionais,
-               registradoresStatus, pc, clock, statusOP)
+    execution(scoreboarding, clock)
+    read_operands(scoreboarding, clock, regiEscrita)
+    pc = issue(regBusca, scoreboarding, pc, clock, regiEscrita)
     regBusca = buscaOp(memoria, pc)
-    writestatus(sys.argv[1], unidadesFuncionais,
-                statusOP, registradoresStatus, clock)
-    while isVazio(unidadesFuncionais, memoria, pc):
+    writestatus(sys.argv[1], scoreboarding.getUFs(),
+                scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
+    while isVazio(scoreboarding.getUFs(), memoria, pc):
         clock = clock+1
-        writeResults(unidadesFuncionais, statusOP, registradoresStatus, clock)
-        execution(statusOP, unidadesFuncionais, clock)
-        read_operands(statusOP, unidadesFuncionais, registradoresStatus, clock)
-        pc = issue(regBusca, unidadesFuncionais,
-                   registradoresStatus, pc, clock, statusOP)
+        regiEscrita = writeResults(scoreboarding, clock)
+        execution(scoreboarding, clock)
+        read_operands(scoreboarding, clock, regiEscrita)
+        pc = issue(regBusca, scoreboarding, pc, clock, regiEscrita)
         regBusca = buscaOp(memoria, pc)
-        writestatus(sys.argv[1], unidadesFuncionais,
-                    statusOP, registradoresStatus, clock)
-        for i in range(len(unidadesFuncionais)):
-            if unidadesFuncionais[i].isBusy():
-                if statusOP[unidadesFuncionais[i].getpc()].getEscrita() != -1:
-                    registradoresStatus[int(
-                        re.sub('[^0-9]', '', statusOP[unidadesFuncionais[i].getpc()].getfi()))] = ''
-                    unidadesFuncionais[i].reset()
     clock = clock+1
-    writestatus(sys.argv[1], unidadesFuncionais,
-                statusOP, registradoresStatus, clock)
+    writestatus(sys.argv[1], scoreboarding.getUFs(),
+                scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
     return
 
 
