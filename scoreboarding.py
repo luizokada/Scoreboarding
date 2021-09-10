@@ -1,6 +1,6 @@
 import sys
 import re
-from typing import List
+from typing import List, Tuple
 
 '''
 Nome: Luiz Fernando Okada
@@ -25,10 +25,10 @@ class regEscrita:
     def setUF(self, reg: int):
         self.UF.append(reg)
 
-    def getUF(self):
+    def getUF(self) -> List[int]:
         return self.UF
 
-    def getRef(self):
+    def getRef(self) -> List[int]:
         return self.registradores
         pass
 
@@ -71,49 +71,49 @@ class UnidadeFuncionalStatus:
     def setrk(self, rk: bool):
         self.rk = rk
 
-    def setOP(self, op):
+    def setOP(self, op: str):
         self.op = op
 
-    def getOP(self):
+    def getOP(self) -> str:
         return self.op
 
     def setNome(self, nome: str):
         self.nome = nome
 
-    def getNome(self):
+    def getNome(self) -> str:
         return self.nome
 
-    def setqj(self, qj):
+    def setqj(self, qj: str):
         self.qj = qj
 
-    def getqj(self):
+    def getqj(self) -> str:
         return self.qj
 
-    def setqk(self, qk):
+    def setqk(self, qk: str):
         self.qk = qk
 
-    def getqk(self):
+    def getqk(self) -> str:
         return self.qk
 
-    def setfi(self, fi):
+    def setfi(self, fi: str):
         self.fi = fi
 
-    def getfi(self):
+    def getfi(self) -> str:
         return self.fi
 
-    def setfj(self, fj):
+    def setfj(self, fj: str):
         self.fj = fj
 
-    def getfj(self):
+    def getfj(self) -> str:
         return self.fj
 
-    def getfk(self):
-        return self.fk
-
-    def setfk(self, fk):
+    def setfk(self, fk: str):
         self.fk = fk
 
-    def getpc(self):
+    def getfk(self) -> str:
+        return self.fk
+
+    def getpc(self) -> int:
         return self.pc
 
     def setpc(self, pc: int):
@@ -162,58 +162,58 @@ class operacoesStatus:
     def setFinalizada(self, finalizada):
         self.finalizada = finalizada
 
-    def setOP(self, OP):
+    def setOP(self, OP: str):
         self.op = OP
 
-    def getOP(self):
+    def getOP(self) -> str:
         return self.op
 
     def setfi(self, fi):
         self.fi = fi
 
-    def getfi(self):
+    def getfi(self) -> str:
         return self.fi
 
     def setfj(self, fj):
         self.fj = fj
 
-    def getfj(self):
+    def getfj(self) -> str:
         return self.fj
 
     def setfk(self, fk):
         self.fk = fk
 
-    def getfk(self):
+    def getfk(self) -> str:
         return self.fk
 
     def setIssue(self, issue: int):
         self.issue = issue
 
-    def getIssue(self):
+    def getIssue(self) -> int:
         return self.issue
 
     def setLeitura(self, leitura: int):
         self.leitura = leitura
 
-    def getLeitura(self):
+    def getLeitura(self) -> int:
         return self.leitura
 
     def setExecucaoi(self, execucaoi: int):
         self.execucaoi = execucaoi
 
-    def getExecucaoi(self):
+    def getExecucaoi(self) -> int:
         return self.execucaoi
 
     def setExecucaof(self, execucaof: int):
         self.execucaof = execucaof
 
-    def getExecucaof(self):
+    def getExecucaof(self) -> int:
         return self.execucaof
 
-    def getEscrita(self):
+    def getEscrita(self) -> int:
         return self.escrita
 
-    def setEscrita(self, escrita):
+    def setEscrita(self, escrita: int):
         self.escrita = escrita
     '''
     Verifica se não existe operação
@@ -229,12 +229,10 @@ class operacoesStatus:
 
 '''
 Classe que representa o scoreboarding
-
-
 '''
 
 
-class scoreBoarding:
+class Scoreboarding:
     def __init__(self) -> None:
         '''
         unidadeFuncionais[0] = Intenger
@@ -254,22 +252,26 @@ class scoreBoarding:
         self.statusOp = []
         self.registradores = ['']*14
 
-    def getUFs(self):
+    ''' 
+    Set e gets dessa classe
+    '''
+
+    def getUFs(self) -> List[UnidadeFuncionalStatus]:
         return self.unidadeFuncionais
 
-    def getUF(self, UF: int):
+    def getUF(self, UF: int) -> UnidadeFuncionalStatus:
         return self.unidadeFuncionais[UF]
 
-    def getOPs(self):
+    def getOPs(self) -> List[operacoesStatus]:
         return self.statusOp
 
-    def getOP(self, i: int):
+    def getOP(self, i: int) -> operacoesStatus:
         return self.statusOp[i]
 
-    def getRegs(self):
+    def getRegs(self) -> List[str]:
         return self.registradores
 
-    def getReg(self, i: int):
+    def getReg(self, i: int) -> str:
         return self.registradores[i]
 
     def setReg(self, i: int, nome: str):
@@ -301,11 +303,11 @@ def setUF(nome: str):
 
 
 '''
-Verifica se existe o Hazzard WAW
+Verifica se existe o Hazzard WAW usada no issue
 '''
 
 
-def isWAW(operacao: operacoesStatus, registradores: List[str], regiEscrita: regEscrita):
+def isWAW(operacao: operacoesStatus, registradores: List[str], regiEscrita: regEscrita) -> bool:
     if operacao.getfi() == 'rb':
         if registradores[13] == '' and 13 not in regiEscrita.getRef():
             return False
@@ -318,11 +320,11 @@ def isWAW(operacao: operacoesStatus, registradores: List[str], regiEscrita: regE
 
 
 '''
-Verifica se existe o Hazzard WAR
+Verifica se existe o Hazzard WAR usado no writing
 '''
 
 
-def isWAR(unidadeFuncional: UnidadeFuncionalStatus, unidadesFuncionais: List[UnidadeFuncionalStatus]):
+def isWAR(unidadeFuncional: UnidadeFuncionalStatus, unidadesFuncionais: List[UnidadeFuncionalStatus]) -> bool:
     for i in range(len(unidadesFuncionais)):
         if (unidadeFuncional.getfi() == unidadesFuncionais[i].getfj() and unidadesFuncionais[i].isrj()) or (unidadeFuncional.getfi() == unidadesFuncionais[i].getfk() and unidadesFuncionais[i].isrk()):
             return True
@@ -330,11 +332,29 @@ def isWAR(unidadeFuncional: UnidadeFuncionalStatus, unidadesFuncionais: List[Uni
 
 
 '''
-Funçao que emite uma operção
+Fução que busca a instrução na memória
+É o estágio de busca do pipeline
+retorna o registradoe que dentro dele tem a próxima instrução que deve ser emitida
 '''
 
 
-def issue(operacao: operacoesStatus, scoreboarding: scoreBoarding, pc: int, clock: int, regiEscrita: regEscrita):
+def buscaOp(Lines, pc: int) -> List[operacoesStatus]:
+    statusop = operacoesStatus()
+    if pc < len(Lines):
+        statusop.setOP(Lines[pc][0])
+        statusop.setfi(Lines[pc][1][0].strip())
+        statusop.setfj(Lines[pc][1][1].strip())
+        statusop.setfk(Lines[pc][1][2].strip())
+    return statusop
+
+
+'''
+Função que emite uma instrução
+retorna o PC(Program Counter)
+'''
+
+
+def issue(operacao: operacoesStatus, scoreboarding: Scoreboarding, pc: int, clock: int, regiEscrita: regEscrita) -> int:
     if operacao.isVazio():
         return pc
     elif not isWAW(operacao, scoreboarding.getRegs(), regiEscrita):
@@ -392,7 +412,7 @@ Funçao que executa a leitura do operandos de um operação que esta em uma UF
 '''
 
 
-def read_operands(scoreboarding: scoreBoarding,  clock: int, regiEscrita: regEscrita):
+def read_operands(scoreboarding: Scoreboarding,  clock: int, regiEscrita: regEscrita):
     for i in range(len(scoreboarding.getUFs())):
         if scoreboarding.getUF(i).isBusy() and i not in regiEscrita.getUF():
             if scoreboarding.getUF(i).isrj() and scoreboarding.getUF(i).isrk():
@@ -405,11 +425,18 @@ def read_operands(scoreboarding: scoreBoarding,  clock: int, regiEscrita: regEsc
 
 
 '''
-Funçao que executa uma operação que esta em uma UF
+Função que executa uma operação que esta em uma UF
+com as segintes latencias de execução
+OP      ciclos
+ld      1
+addd    2
+subd    2
+multd   10
+divd    40
 '''
 
 
-def execution(scoreboarding: scoreBoarding, clock: int):
+def execution(scoreboarding: Scoreboarding, clock: int):
     for i in range(len(scoreboarding.getUFs())):
         if scoreboarding.getUF(i).isBusy():
             if (not scoreboarding.getUF(i).isrj() and not scoreboarding.getUF(i).isrk()) and scoreboarding.getUF(i).getqj() == '' and scoreboarding.getUF(i).getqk() == '':
@@ -439,11 +466,12 @@ def execution(scoreboarding: scoreBoarding, clock: int):
 
 
 '''
-Funçao que escreve os resultados das operações
+Funçao que escreve os resultados das instruções retorna um 
+registrador que nele contem as UFs e registradores que foram alterados n estágio da escrita
 '''
 
 
-def writeResults(scoreboarding: scoreBoarding, clock: int):
+def writeResults(scoreboarding: Scoreboarding, clock: int) -> regEscrita:
     alterados = regEscrita()
     for i in range(len(scoreboarding.getUFs())):
         if not isWAR(scoreboarding.getUF(i), scoreboarding.getUFs()):
@@ -492,27 +520,12 @@ def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) 
 
 
 '''
-Fução que busca a operaç~o na memória
-É o estágio de busca do pipeline
-'''
-
-
-def buscaOp(Lines, pc) -> List[operacoesStatus]:
-    statusop = operacoesStatus()
-    if pc < len(Lines):
-        statusop.setOP(Lines[pc][0])
-        statusop.setfi(Lines[pc][1][0].strip())
-        statusop.setfj(Lines[pc][1][1].strip())
-        statusop.setfk(Lines[pc][1][2].strip())
-    return statusop
-
-
-'''
 Lê o arquivo de entrada e armazena as instruções na memória
+e inicializa um arquivo em branco que será a saida
 '''
 
 
-def lerArq(nome_arq):
+def lerArq(nome_arq: str) -> Tuple[str, List[str]]:
     try:
         arquivo = open(nome_arq, 'r')
         memoria = arquivo.read().splitlines()
@@ -540,16 +553,16 @@ Funçao responsável por escrever o arquivo de saida
 '''
 
 
-def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus], registradores: List[str], clock: int):
+def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus], registradores: List[str], clock: int):
     nome_arq = nome_arq.split('.')
     saida = nome_arq[0]
     saida = saida+'.out'
     arquivo = open(saida, 'a')
     arquivo.writelines('Clock:'+str(clock)+'\n')
     arquivo.write(
-        '--------------------------Status operacoes-------------------------------\n')
+        '--------------------------------Status operacoes-------------------------------------\n')
     arquivo.write(
-        'OP    |Fi  |Fj  |Fk  |issue\t\t|read\t|Execution\t|write\t|\n')
+        'OP    |Fi  |Fj  |Fk  |issue\t\t|read\t\t|Execution\t|write\t\t|\n')
 
     for i in range(len(operacoes)):
         if operacoes[i].getOP() == 'ld':
@@ -581,7 +594,7 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
         if operacoes[i].getLeitura() != -1:
             arquivo.write(str(operacoes[i].getLeitura())+'\t\t|')
         else:
-            arquivo.write('\t|')
+            arquivo.write('\t\t|')
         if operacoes[i].getExecucaoi() != -1:
             if operacoes[i].getExecucaof() != -1:
                 arquivo.write(str(operacoes[i].getExecucaoi()) +
@@ -594,19 +607,21 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
         if operacoes[i].getEscrita() != -1:
             arquivo.write(str(operacoes[i].getEscrita())+'\t\t|'+'\n')
         else:
-            arquivo.write('\t|\n')
+            arquivo.write('\t\t|\n')
     arquivo.write('\n')
     arquivo.write(
         '------------------------Status Unidades Funcionais-------------------------\n')
-    arquivo.write('   FU   |'+' Busy  |' +
+    arquivo.write('FU     |'+' Busy\t|' +
                   'OP    |'+'Fi  |'+'Fj  |'+'Fk  |'+'Qj       |'+'Qk       |'+'Rj     |'+'Rk     |'+'\n')
     for i in range(len(unidadesFuncionais)):
         if i == 3:
-            arquivo.write(unidadesFuncionais[i].getNome()+'  \t|')
+            arquivo.write(unidadesFuncionais[i].getNome()+'    |')
         elif i == 0:
             arquivo.write(unidadesFuncionais[i].getNome()+'|')
+        elif i == 4:
+            arquivo.write(unidadesFuncionais[i].getNome()+' |')
         else:
-            arquivo.write(unidadesFuncionais[i].getNome()+'\t|')
+            arquivo.write(unidadesFuncionais[i].getNome()+'  |')
         if unidadesFuncionais[i].isBusy():
             arquivo.write(str(unidadesFuncionais[i].isBusy())+'\t|')
             if i == 1 or i == 2:
@@ -665,7 +680,7 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
                 arquivo.write(str(unidadesFuncionais[i].isrk())+'  |\n')
 
         else:
-            arquivo.write(str(unidadesFuncionais[i].isBusy())+'  |')
+            arquivo.write(str(unidadesFuncionais[i].isBusy())+'\t|')
             arquivo.write('      |')
             arquivo.write('    |')
             arquivo.write('    |')
@@ -701,23 +716,15 @@ def writestatus(nome_arq, unidadesFuncionais: List[UnidadeFuncionalStatus], oper
 
 '''
 Funçao que representa o simulador do pipeline
-unidadeFuncionais[0] = Intenger
-unidadeFuncionais[1] = Mult1
-unidadeFuncionais[2] = Mult2
-unidadeFuncionais[3] = add
-unidadeFuncionais[4] = Divide
-registradoresStatus[0]....[12] = r0....r12
-registradoresStatus[13] = rb
-
 '''
 
 
-def pipeline(memoria):
+def pipeline(memoria: Tuple[str, List[str]]):
     pc = 0
     clock = 1
     regBusca = operacoesStatus()
     regiEscrita = regEscrita()
-    scoreboarding = scoreBoarding()
+    scoreboarding = Scoreboarding()
     regBusca = buscaOp(memoria, pc)
     writestatus(sys.argv[1], scoreboarding.getUFs(),
                 scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
