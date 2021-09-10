@@ -20,10 +20,15 @@ rb = registrador base (usado apenas na instrução ld)
 Registradores: r1 … r12 e rb
 
 b) Latência da instruções
+
 ld → 1 ciclo
+
 muld → 10 ciclos
+
 divd → 40 ciclos
+
 subd → 2 ciclos
+
 addd → 2 ciclos
 
 c) Execução
