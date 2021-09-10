@@ -360,7 +360,7 @@ def issue(operacao: operacoesStatus, scoreboarding: Scoreboarding, pc: int, cloc
     elif not isWAW(operacao, scoreboarding.getRegs(), regiEscrita):
         if operacao.getOP() == 'ld':
             UF = 0
-        elif operacao.getOP() == 'multd':
+        elif operacao.getOP() == 'muld':
             if not scoreboarding.getUF(1).isBusy():
                 UF = 1
             else:
@@ -452,7 +452,7 @@ def execution(scoreboarding: Scoreboarding, clock: int):
                             i).getpc()).getExecucaoi() == 1:
                         scoreboarding.getOP(scoreboarding.getUF(
                             i).getpc()).setExecucaof(clock)
-                elif scoreboarding.getUF(i).getOP() == 'multd':
+                elif scoreboarding.getUF(i).getOP() == 'muld':
                     if clock - scoreboarding.getOP(scoreboarding.getUF(
                             i).getpc()).getExecucaoi() == 9:
                         scoreboarding.getOP(scoreboarding.getUF(
@@ -624,7 +624,7 @@ def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncionalStatus],
         if unidadesFuncionais[i].isBusy():
             arquivo.write(str(unidadesFuncionais[i].isBusy())+'\t|')
             if i == 1 or i == 2:
-                arquivo.write(unidadesFuncionais[i].getOP()+' |')
+                arquivo.write(unidadesFuncionais[i].getOP()+'  |')
             elif i == 0:
                 arquivo.write(unidadesFuncionais[i].getOP()+'    |')
             else:
