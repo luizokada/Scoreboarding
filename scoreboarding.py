@@ -688,12 +688,12 @@ def verificaOP(memoria):
     operacoes = ['ld', 'muld', 'addd', 'subd', 'divd']
     for i in range(len(memoria)):
         if memoria[i][0] not in operacoes:
-            print("arquivo de entrado com sintaxe errada")
+            print("arquivo de entrada com sintaxe errada")
             exit()
 
 
 '''
-verifica se o arquivo de entrada possui a sintaxe dos operandos correta
+Verifica se o arquivo de entrada possui a sintaxe dos operandos correta
 '''
 
 
@@ -710,14 +710,18 @@ def verificaOperandos(memoria):
                 aux = aux.split(')')
                 aux[0] = aux[0].replace('(', '')
                 memoria[i][1][1] = aux[0]
-                memoria[i][1].append(aux[1])
+                try:
+                    memoria[i][1].append(aux[1])
+                except IndexError:
+                    print("sintaxe de uma instrucao ld esta errada")
+                    exit()
             for j in range(len(memoria[i][1])):
                 memoria[i][1][j] = memoria[i][1][j].strip()
                 if len(memoria[i][1]) > 3:
                     print("Arquivo de entrada com operandos errados")
                     exit()
                 elif memoria[i][1][j] not in operandos:
-                    if j == 1:
+                    if memoria[i][0] == 'ld':
                         try:
                             int(memoria[i][1][1])
                         except ValueError:
