@@ -679,12 +679,22 @@ def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) 
     return False
 
 
+'''
+Verifica se o arquivo de entrada possui a sintaxe das instruçoes correta
+'''
+
+
 def verificaOP(memoria):
     operacoes = ['ld', 'muld', 'addd', 'subd', 'divd']
     for i in range(len(memoria)):
         if memoria[i][0] not in operacoes:
             print("arquivo de entrado com sintaxe errada")
             exit()
+
+
+'''
+verifica se o arquivo de entrada possui a sintaxe dos operandos correta
+'''
 
 
 def verificaOperandos(memoria):
