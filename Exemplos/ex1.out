@@ -79,25 +79,6 @@ divd  |r3  |r1  |r2  |		3	|		|		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
-Integer|True	|ld    |r1  |	 |rb  |         |         |False  |False  |
-Mult1  |False	|      |    |    |    |         |         |       |       |
-Mult2  |False	|      |    |    |    |         |         |       |       |
-Add    |False	|      |    |    |    |         |         |       |       |
-Divide |True	|divd  |r3  |r1  |r2  |Integer  |         |False  |True   |
-
-----------------------------------------------Status Registradores--------------------------------------------------
-    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |Integer|       |Divide |       |       |       |       |       |       |       |       |       |       |
---------------------------------------------------------------------------------------------------------------------
-
-Clock:6
---------------------------------Status operacoes-------------------------------------
-OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
-ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
-divd  |r3  |r1  |r2  |		3	|		|		|		|
-
-------------------------Status Unidades Funcionais-------------------------
-FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|False	|      |    |    |    |         |         |       |       |
 Mult1  |False	|      |    |    |    |         |         |       |       |
 Mult2  |False	|      |    |    |    |         |         |       |       |
@@ -109,7 +90,7 @@ Divide |True	|divd  |r3  |r1  |r2  |         |         |True   |True   |
 UF  |       |       |       |Divide |       |       |       |       |       |       |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:7
+Clock:6
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
@@ -129,7 +110,7 @@ Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
 UF  |       |Mult1  |       |Divide |       |       |       |       |       |       |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:8
+Clock:7
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
@@ -150,7 +131,7 @@ Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
 UF  |       |Mult1  |       |Divide |       |Add    |       |       |       |       |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:9
+Clock:8
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
@@ -172,7 +153,7 @@ Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
 UF  |       |Mult1  |       |Divide |       |Add    |       |       |       |       |       |       |Mult2  |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:10
+Clock:9
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
@@ -195,7 +176,7 @@ Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
 UF  |       |Mult1  |Integer|Divide |       |Add    |       |       |       |       |       |       |Mult2  |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:11
+Clock:10
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
@@ -204,6 +185,29 @@ muld  |r1  |r10 |r5  |		6	|7		|8 - 		|		|
 addd  |r5  |r3  |r2  |		7	|		|		|		|
 muld  |r12 |r3  |r5  |		8	|		|		|		|
 ld    |r2  |-10 |rb  |		9	|10		|		|		|
+
+------------------------Status Unidades Funcionais-------------------------
+FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
+Integer|True	|ld    |r2  |	 |rb  |         |         |False  |False  |
+Mult1  |True	|muld  |r1  |r10 |r5  |         |         |False  |False  |
+Mult2  |True	|muld  |r12 |r3  |r5  |Divide   |Add      |False  |False  |
+Add    |True	|addd  |r5  |r3  |r2  |Divide   |         |False  |True   |
+Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
+
+----------------------------------------------Status Registradores--------------------------------------------------
+    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
+UF  |       |Mult1  |Integer|Divide |       |Add    |       |       |       |       |       |       |Mult2  |       |
+--------------------------------------------------------------------------------------------------------------------
+
+Clock:11
+--------------------------------Status operacoes-------------------------------------
+OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
+ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
+divd  |r3  |r1  |r2  |		3	|6		|7 - 		|		|
+muld  |r1  |r10 |r5  |		6	|7		|8 - 		|		|
+addd  |r5  |r3  |r2  |		7	|		|		|		|
+muld  |r12 |r3  |r5  |		8	|		|		|		|
+ld    |r2  |-10 |rb  |		9	|10		|11-11		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -338,7 +342,7 @@ Clock:17
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
 divd  |r3  |r1  |r2  |		3	|6		|7 - 		|		|
-muld  |r1  |r10 |r5  |		6	|7		|8 - 		|		|
+muld  |r1  |r10 |r5  |		6	|7		|8-17		|		|
 addd  |r5  |r3  |r2  |		7	|		|		|		|
 muld  |r12 |r3  |r5  |		8	|		|		|		|
 ld    |r2  |-10 |rb  |		9	|10		|11-11		|		|
@@ -369,14 +373,14 @@ ld    |r2  |-10 |rb  |		9	|10		|11-11		|		|
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|True	|ld    |r2  |	 |rb  |         |         |False  |False  |
-Mult1  |True	|muld  |r1  |r10 |r5  |         |         |False  |False  |
+Mult1  |False	|      |    |    |    |         |         |       |       |
 Mult2  |True	|muld  |r12 |r3  |r5  |Divide   |Add      |False  |False  |
 Add    |True	|addd  |r5  |r3  |r2  |Divide   |         |False  |True   |
 Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
 
 ----------------------------------------------Status Registradores--------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |Mult1  |Integer|Divide |       |Add    |       |       |       |       |       |       |Mult2  |       |
+UF  |       |       |Integer|Divide |       |Add    |       |       |       |       |       |       |Mult2  |       |
 --------------------------------------------------------------------------------------------------------------------
 
 Clock:19
@@ -1004,7 +1008,7 @@ Clock:46
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
-divd  |r3  |r1  |r2  |		3	|6		|7 - 		|		|
+divd  |r3  |r1  |r2  |		3	|6		|7-46		|		|
 muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
 addd  |r5  |r3  |r2  |		7	|		|		|		|
 muld  |r12 |r3  |r5  |		8	|		|		|		|
@@ -1037,29 +1041,6 @@ ld    |r2  |-10 |rb  |		9	|10		|11-11		|		|
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|True	|ld    |r2  |	 |rb  |         |         |False  |False  |
 Mult1  |False	|      |    |    |    |         |         |       |       |
-Mult2  |True	|muld  |r12 |r3  |r5  |Divide   |Add      |False  |False  |
-Add    |True	|addd  |r5  |r3  |r2  |Divide   |         |False  |True   |
-Divide |True	|divd  |r3  |r1  |r2  |         |         |False  |False  |
-
-----------------------------------------------Status Registradores--------------------------------------------------
-    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |Integer|Divide |       |Add    |       |       |       |       |       |       |Mult2  |       |
---------------------------------------------------------------------------------------------------------------------
-
-Clock:48
---------------------------------Status operacoes-------------------------------------
-OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
-ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
-divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
-muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
-addd  |r5  |r3  |r2  |		7	|		|		|		|
-muld  |r12 |r3  |r5  |		8	|		|		|		|
-ld    |r2  |-10 |rb  |		9	|10		|11-11		|		|
-
-------------------------Status Unidades Funcionais-------------------------
-FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
-Integer|True	|ld    |r2  |	 |rb  |         |         |False  |False  |
-Mult1  |False	|      |    |    |    |         |         |       |       |
 Mult2  |True	|muld  |r12 |r3  |r5  |         |Add      |True   |False  |
 Add    |True	|addd  |r5  |r3  |r2  |         |         |True   |True   |
 Divide |False	|      |    |    |    |         |         |       |       |
@@ -1069,7 +1050,7 @@ Divide |False	|      |    |    |    |         |         |       |       |
 UF  |       |       |Integer|       |       |Add    |       |       |       |       |       |       |Mult2  |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:49
+Clock:48
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
@@ -1077,7 +1058,7 @@ divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
 muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
 addd  |r5  |r3  |r2  |		7	|48		|		|		|
 muld  |r12 |r3  |r5  |		8	|		|		|		|
-ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
+ld    |r2  |-10 |rb  |		9	|10		|11-11		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -1092,13 +1073,36 @@ Divide |False	|      |    |    |    |         |         |       |       |
 UF  |       |       |Integer|       |       |Add    |       |       |       |       |       |       |Mult2  |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:50
+Clock:49
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
 divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
 muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
 addd  |r5  |r3  |r2  |		7	|48		|49 - 		|		|
+muld  |r12 |r3  |r5  |		8	|		|		|		|
+ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
+
+------------------------Status Unidades Funcionais-------------------------
+FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
+Integer|False	|      |    |    |    |         |         |       |       |
+Mult1  |False	|      |    |    |    |         |         |       |       |
+Mult2  |True	|muld  |r12 |r3  |r5  |         |Add      |True   |False  |
+Add    |True	|addd  |r5  |r3  |r2  |         |         |False  |False  |
+Divide |False	|      |    |    |    |         |         |       |       |
+
+----------------------------------------------Status Registradores--------------------------------------------------
+    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
+UF  |       |       |       |       |       |Add    |       |       |       |       |       |       |Mult2  |       |
+--------------------------------------------------------------------------------------------------------------------
+
+Clock:50
+--------------------------------Status operacoes-------------------------------------
+OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
+ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
+divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
+muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
+addd  |r5  |r3  |r2  |		7	|48		|49-50		|		|
 muld  |r12 |r3  |r5  |		8	|		|		|		|
 ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
 
@@ -1129,13 +1133,13 @@ ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|False	|      |    |    |    |         |         |       |       |
 Mult1  |False	|      |    |    |    |         |         |       |       |
-Mult2  |True	|muld  |r12 |r3  |r5  |         |Add      |True   |False  |
-Add    |True	|addd  |r5  |r3  |r2  |         |         |False  |False  |
+Mult2  |True	|muld  |r12 |r3  |r5  |         |         |True   |True   |
+Add    |False	|      |    |    |    |         |         |       |       |
 Divide |False	|      |    |    |    |         |         |       |       |
 
 ----------------------------------------------Status Registradores--------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |       |       |       |Add    |       |       |       |       |       |       |Mult2  |       |
+UF  |       |       |       |       |       |       |       |       |       |       |       |       |Mult2  |       |
 --------------------------------------------------------------------------------------------------------------------
 
 Clock:52
@@ -1145,14 +1149,14 @@ ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
 divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
 muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
 addd  |r5  |r3  |r2  |		7	|48		|49-50		|51		|
-muld  |r12 |r3  |r5  |		8	|		|		|		|
+muld  |r12 |r3  |r5  |		8	|52		|		|		|
 ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|False	|      |    |    |    |         |         |       |       |
 Mult1  |False	|      |    |    |    |         |         |       |       |
-Mult2  |True	|muld  |r12 |r3  |r5  |         |         |True   |True   |
+Mult2  |True	|muld  |r12 |r3  |r5  |         |         |False  |False  |
 Add    |False	|      |    |    |    |         |         |       |       |
 Divide |False	|      |    |    |    |         |         |       |       |
 
@@ -1168,7 +1172,7 @@ ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
 divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
 muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
 addd  |r5  |r3  |r2  |		7	|48		|49-50		|51		|
-muld  |r12 |r3  |r5  |		8	|52		|		|		|
+muld  |r12 |r3  |r5  |		8	|52		|53 - 		|		|
 ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
 
 ------------------------Status Unidades Funcionais-------------------------
@@ -1375,7 +1379,7 @@ ld    |r1  |-10 |rb  |		2	|3		|4-4		|5		|
 divd  |r3  |r1  |r2  |		3	|6		|7-46		|47		|
 muld  |r1  |r10 |r5  |		6	|7		|8-17		|18		|
 addd  |r5  |r3  |r2  |		7	|48		|49-50		|51		|
-muld  |r12 |r3  |r5  |		8	|52		|53 - 		|		|
+muld  |r12 |r3  |r5  |		8	|52		|53-62		|		|
 ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
 
 ------------------------Status Unidades Funcionais-------------------------
@@ -1405,13 +1409,13 @@ ld    |r2  |-10 |rb  |		9	|10		|11-11		|49		|
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|False	|      |    |    |    |         |         |       |       |
 Mult1  |False	|      |    |    |    |         |         |       |       |
-Mult2  |True	|muld  |r12 |r3  |r5  |         |         |False  |False  |
+Mult2  |False	|      |    |    |    |         |         |       |       |
 Add    |False	|      |    |    |    |         |         |       |       |
 Divide |False	|      |    |    |    |         |         |       |       |
 
 ----------------------------------------------Status Registradores--------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |       |       |       |       |       |       |       |       |       |       |Mult2  |       |
+UF  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
 Clock:64
