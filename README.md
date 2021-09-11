@@ -6,17 +6,29 @@ Para esta tarefa você deve implementar um simulador de Scoreboarding.
 Especificação
 
 a) Instruções
+
 ld d, (offset)rb
+
 muld d, o1, o2
+
 divd d, o1, o2
+
 subd d, o1, o2
+
 addd d, o1, o2
+
 d = registrador destino
+
 offset = deslocamento (inteiro – positivo ou negativo)
+
 b = registrador base
+
 o1 = registrador do operando 1
+
 o2 = registrador do operando 2
+
 rb = registrador base (usado apenas na instrução ld)
+
 Registradores: r1 … r12 e rb
 
 b) Latência da instruções
