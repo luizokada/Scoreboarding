@@ -29,7 +29,7 @@ Classe que representa os status das unidade funcionais
 '''
 
 
-class UnidadeFuncionalStatus:
+class UnidadeFuncional:
     def __init__(self) -> None:
         self.nome = ''
         self.busy = False
@@ -131,7 +131,7 @@ Classe que representa os status das instruçoes
 '''
 
 
-class operacoesStatus:
+class operacao:
     def __init__(self) -> None:
         self.op = ''
         self.fi = ''
@@ -234,7 +234,7 @@ class Scoreboarding:
         registradoresStatus[0]....[12] = r0....r12
         registradoresStatus[13] = rb
         '''
-        self.unidadeFuncionais = [UnidadeFuncionalStatus() for _ in range(5)]
+        self.unidadeFuncionais = [UnidadeFuncional() for _ in range(5)]
         self.unidadeFuncionais[0].setNome('Integer')
         self.unidadeFuncionais[1].setNome('Mult1')
         self.unidadeFuncionais[2].setNome('Mult2')
@@ -246,16 +246,16 @@ class Scoreboarding:
     Set e gets dessa classe
     '''
 
-    def getUFs(self) -> List[UnidadeFuncionalStatus]:
+    def getUFs(self) -> List[UnidadeFuncional]:
         return self.unidadeFuncionais
 
-    def getUF(self, UF: int) -> UnidadeFuncionalStatus:
+    def getUF(self, UF: int) -> UnidadeFuncional:
         return self.unidadeFuncionais[UF]
 
-    def getOPs(self) -> List[operacoesStatus]:
+    def getOPs(self) -> List[operacao]:
         return self.statusOp
 
-    def getOP(self, i: int) -> operacoesStatus:
+    def getOP(self, i: int) -> operacao:
         return self.statusOp[i]
 
     def getRegs(self) -> List[str]:
@@ -267,5 +267,5 @@ class Scoreboarding:
     def setReg(self, i: int, nome: str):
         self.registradores[i] = nome
 
-    def setOP(self, OP: operacoesStatus):
+    def setOP(self, OP: operacao):
         self.statusOp.append(OP)

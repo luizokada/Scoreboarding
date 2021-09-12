@@ -1,7 +1,7 @@
 import sys
 import re
 from typing import List, Tuple
-from componentes import Scoreboarding, regEscrita, operacoesStatus, UnidadeFuncionalStatus
+from componentes import Scoreboarding, regEscrita, operacao, UnidadeFuncional
 
 '''
 Nome: Luiz Fernando Okada
@@ -98,7 +98,7 @@ Funçao responsável por escrever o arquivo de saida
 '''
 
 
-def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncionalStatus], operacoes: List[operacoesStatus], registradores: List[str], clock: int):
+def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], operacoes: List[operacao], registradores: List[str], clock: int):
     nome_arq = nome_arq.split('.')
     saida = nome_arq[0]
     saida = saida+'.out'
@@ -285,7 +285,7 @@ Verifica se existe o Hazzard WAW usada no issue
 '''
 
 
-def isWAW(operacao: operacoesStatus, registradores: List[str], regiEscrita: regEscrita) -> bool:
+def isWAW(operacao: operacao, registradores: List[str], regiEscrita: regEscrita) -> bool:
     if operacao.getfi() == 'rb':
         if registradores[13] == '' and 13 not in regiEscrita.getRef():
             return False
@@ -302,7 +302,7 @@ Verifica se existe o Hazzard WAR usado no writing
 '''
 
 
-def isWAR(unidadeFuncional: UnidadeFuncionalStatus, unidadesFuncionais: List[UnidadeFuncionalStatus]) -> bool:
+def isWAR(unidadeFuncional: UnidadeFuncional, unidadesFuncionais: List[UnidadeFuncional]) -> bool:
     for i in range(len(unidadesFuncionais)):
         if (unidadeFuncional.getfi() == unidadesFuncionais[i].getfj() and unidadesFuncionais[i].isrj()) or (unidadeFuncional.getfi() == unidadesFuncionais[i].getfk() and unidadesFuncionais[i].isrk()):
             return True
@@ -316,14 +316,14 @@ retorna o registradoe que dentro dele tem a próxima instrução que deve ser em
 '''
 
 
-def buscaOp(Lines, pc: int) -> List[operacoesStatus]:
-    statusop = operacoesStatus()
+def buscaOp(Lines, pc: int) -> operacao:
+    regBusca = operacao()
     if pc < len(Lines):
-        statusop.setOP(Lines[pc][0])
-        statusop.setfi(Lines[pc][1][0].strip())
-        statusop.setfj(Lines[pc][1][1].strip())
-        statusop.setfk(Lines[pc][1][2].strip())
-    return statusop
+        regBusca.setOP(Lines[pc][0])
+        regBusca.setfi(Lines[pc][1][0].strip())
+        regBusca.setfj(Lines[pc][1][1].strip())
+        regBusca.setfk(Lines[pc][1][2].strip())
+    return regBusca
 
 
 '''
@@ -332,7 +332,7 @@ retorna o PC(Program Counter)
 '''
 
 
-def issue(operacao: operacoesStatus, scoreboarding: Scoreboarding, pc: int, clock: int, regiEscrita: regEscrita) -> int:
+def issue(operacao: operacao, scoreboarding: Scoreboarding, pc: int, clock: int, regiEscrita: regEscrita) -> int:
     if operacao.isVazio():
         return pc
     elif not isWAW(operacao, scoreboarding.getRegs(), regiEscrita):
@@ -481,7 +481,7 @@ Verifica se o pipiline está vazio
 '''
 
 
-def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) -> bool:
+def isVazio(unidadesFuncionais: List[UnidadeFuncional], memoria, pc: int) -> bool:
     if pc < len(memoria):
         return True
     for i in range(len(unidadesFuncionais)):
@@ -493,7 +493,7 @@ def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) 
 def pipeline(memoria: Tuple[str, List[str]]):
     pc = 0
     clock = 0
-    regBusca = operacoesStatus()
+    regBusca = operacao()
     regiEscrita = regEscrita()
     scoreboarding = Scoreboarding()
     clock = clock+1
