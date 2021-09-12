@@ -1,6 +1,7 @@
 import sys
 import re
 from typing import List, Tuple
+from componentes import Scoreboarding, regEscrita, operacoesStatus, UnidadeFuncionalStatus
 
 '''
 Nome: Luiz Fernando Okada
@@ -10,298 +11,88 @@ Trabalho 1 Arquitetura de Organização de computadores
 
 
 '''
-Registrador do estágio escrita
+Verifica se o arquivo de entrada possui a sintaxe das instruçoes correta
 '''
 
 
-class regEscrita:
-    def __init__(self) -> None:
-        self.registradores = []
-        self.UF = []
-
-    def setRegistrdor(self, reg: int):
-        self.registradores.append(reg)
-
-    def setUF(self, reg: int):
-        self.UF.append(reg)
-
-    def getUF(self) -> List[int]:
-        return self.UF
-
-    def getRef(self) -> List[int]:
-        return self.registradores
-        pass
+def verificaOP(memoria):
+    operacoes = ['ld', 'muld', 'addd', 'subd', 'divd']
+    for i in range(len(memoria)):
+        if memoria[i][0] not in operacoes:
+            print("arquivo de entrada com sintaxe errada")
+            exit()
 
 
 '''
-Classe que representa os status das unidade funcionais
+Verifica se o arquivo de entrada possui a sintaxe dos operandos correta
 '''
 
 
-class UnidadeFuncionalStatus:
-    def __init__(self) -> None:
-        self.nome = ''
-        self.busy = False
-        self.op = ''
-        self.fi = ''
-        self.fj = ''
-        self.fk = ''
-        self.qj = ''
-        self.qk = ''
-        self.rj = True
-        self.rk = True
-        self.pc = -1
-        pass
-
-    def isBusy(self) -> bool:
-        return self.busy
-
-    def setBusy(self, busy: bool):
-        self.busy = busy
-
-    def isrj(self) -> bool:
-        return self.rj
-
-    def setrj(self, rj: bool):
-        self.rj = rj
-
-    def isrk(self) -> bool:
-        return self.rk
-
-    def setrk(self, rk: bool):
-        self.rk = rk
-
-    def setOP(self, op: str):
-        self.op = op
-
-    def getOP(self) -> str:
-        return self.op
-
-    def setNome(self, nome: str):
-        self.nome = nome
-
-    def getNome(self) -> str:
-        return self.nome
-
-    def setqj(self, qj: str):
-        self.qj = qj
-
-    def getqj(self) -> str:
-        return self.qj
-
-    def setqk(self, qk: str):
-        self.qk = qk
-
-    def getqk(self) -> str:
-        return self.qk
-
-    def setfi(self, fi: str):
-        self.fi = fi
-
-    def getfi(self) -> str:
-        return self.fi
-
-    def setfj(self, fj: str):
-        self.fj = fj
-
-    def getfj(self) -> str:
-        return self.fj
-
-    def setfk(self, fk: str):
-        self.fk = fk
-
-    def getfk(self) -> str:
-        return self.fk
-
-    def getpc(self) -> int:
-        return self.pc
-
-    def setpc(self, pc: int):
-        self.pc = pc
-    '''
-    define os atributos do objeto como ele foi criado
-    '''
-
-    def reset(self):
-        self.busy = False
-        self.op = ''
-        self.fi = ''
-        self.fj = ''
-        self.fk = ''
-        self.qj = ''
-        self.qk = ''
-        self.rj = True
-        self.rk = True
-        self.pc = -1
-
-
-'''
-Classe que representa os status das instruçoes
-'''
-
-
-class operacoesStatus:
-    def __init__(self) -> None:
-        self.op = ''
-        self.fi = ''
-        self.fj = ''
-        self.fk = ''
-        self.issue = -1
-        self.leitura = -1
-        self.execucaoi = -1
-        self.execucaof = -1
-        self.escrita = -1
-        self.finalizada = False
-    '''
-    Sets e gets dessa classe
-    '''
-
-    def isFinalizada(self):
-        return self.finalizada
-
-    def setFinalizada(self, finalizada):
-        self.finalizada = finalizada
-
-    def setOP(self, OP: str):
-        self.op = OP
-
-    def getOP(self) -> str:
-        return self.op
-
-    def setfi(self, fi):
-        self.fi = fi
-
-    def getfi(self) -> str:
-        return self.fi
-
-    def setfj(self, fj):
-        self.fj = fj
-
-    def getfj(self) -> str:
-        return self.fj
-
-    def setfk(self, fk):
-        self.fk = fk
-
-    def getfk(self) -> str:
-        return self.fk
-
-    def setIssue(self, issue: int):
-        self.issue = issue
-
-    def getIssue(self) -> int:
-        return self.issue
-
-    def setLeitura(self, leitura: int):
-        self.leitura = leitura
-
-    def getLeitura(self) -> int:
-        return self.leitura
-
-    def setExecucaoi(self, execucaoi: int):
-        self.execucaoi = execucaoi
-
-    def getExecucaoi(self) -> int:
-        return self.execucaoi
-
-    def setExecucaof(self, execucaof: int):
-        self.execucaof = execucaof
-
-    def getExecucaof(self) -> int:
-        return self.execucaof
-
-    def getEscrita(self) -> int:
-        return self.escrita
-
-    def setEscrita(self, escrita: int):
-        self.escrita = escrita
-    '''
-    Verifica se não existe operação
-    '''
-
-    def isVazio(self):
-        if self.op == '':
-            return True
+def verificaOperandos(memoria):
+    operandos = ['r0', 'r1', 'r2', 'r3', 'r4', 'r5',
+                 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12', 'rb']
+    for i in range(len(memoria)):
+        if len(memoria[i][1]) < 2:
+            print("Arquivo de entrada com operandos errados")
+            exit()
         else:
-            return False
-        pass
+            if memoria[i][0] == 'ld':
+                aux = memoria[i][1][1]
+                aux = aux.split(')')
+                aux[0] = aux[0].replace('(', '')
+                memoria[i][1][1] = aux[0]
+                try:
+                    memoria[i][1].append(aux[1])
+                except IndexError:
+                    print("sintaxe de uma instrucao ld esta errada")
+                    exit()
+            for j in range(len(memoria[i][1])):
+                memoria[i][1][j] = memoria[i][1][j].strip()
+                if len(memoria[i][1]) > 3:
+                    print("Arquivo de entrada com operandos errados")
+                    exit()
+                elif memoria[i][1][j] not in operandos:
+                    if memoria[i][0] == 'ld':
+                        try:
+                            int(memoria[i][1][1])
+                        except ValueError:
+                            print("Arquivo de entrada com operandos errados")
+                            exit()
+                    else:
+                        print("Arquivo de entrada com operandos errados")
+                        exit()
+
+    return
 
 
 '''
-Classe que representa o scoreboarding
+Lê o arquivo de entrada e armazena as instruções na memória
+e inicializa um arquivo em branco que será a saida
 '''
 
 
-class Scoreboarding:
-    def __init__(self) -> None:
-        '''
-        unidadeFuncionais[0] = Intenger
-        unidadeFuncionais[1] = Mult1
-        unidadeFuncionais[2] = Mult2
-        unidadeFuncionais[3] = add
-        unidadeFuncionais[4] = Divide
-        registradoresStatus[0]....[12] = r0....r12
-        registradoresStatus[13] = rb
-        '''
-        self.unidadeFuncionais = [UnidadeFuncionalStatus() for _ in range(5)]
-        self.unidadeFuncionais[0].setNome('Integer')
-        self.unidadeFuncionais[1].setNome('Mult1')
-        self.unidadeFuncionais[2].setNome('Mult2')
-        self.unidadeFuncionais[3].setNome('Add')
-        self.unidadeFuncionais[4].setNome('Divide')
-        self.statusOp = []
-        self.registradores = ['']*14
-
-    ''' 
-    Set e gets dessa classe
-    '''
-
-    def getUFs(self) -> List[UnidadeFuncionalStatus]:
-        return self.unidadeFuncionais
-
-    def getUF(self, UF: int) -> UnidadeFuncionalStatus:
-        return self.unidadeFuncionais[UF]
-
-    def getOPs(self) -> List[operacoesStatus]:
-        return self.statusOp
-
-    def getOP(self, i: int) -> operacoesStatus:
-        return self.statusOp[i]
-
-    def getRegs(self) -> List[str]:
-        return self.registradores
-
-    def getReg(self, i: int) -> str:
-        return self.registradores[i]
-
-    def setReg(self, i: int, nome: str):
-        self.registradores[i] = nome
-
-    def setOP(self, OP: operacoesStatus):
-        self.statusOp.append(OP)
+def lerArq(nome_arq: str) -> Tuple[str, List[str]]:
+    try:
+        arquivo = open(nome_arq, 'r')
+        memoria = arquivo.read().splitlines()
+        for i in range(len(memoria)):
+            memoria[i] = memoria[i].split(' ', 1)
+            memoria[i][1] = memoria[i][1].split(',')
+        verificaOP(memoria)
+        verificaOperandos(memoria)
+        nome_arq = nome_arq.split('.')
+        saida = nome_arq[0]
+        saida = saida+'.out'
+        arquivo = open(saida, 'w')
+        return memoria
+    except FileNotFoundError:
+        print("O arquivo nao existe tente executar novamente")
+        exit()
 
 
 '''
-Retorna a UF que irá escrever no registrador
+Funçao que representa o simulador do pipeline
 '''
-
-
-def setUF(nome: str):
-    if nome == 'Integer':
-        UF = 0
-    elif nome == 'Mult1':
-        UF = 1
-    elif nome == 'Mult2':
-        UF = 2
-    elif nome == 'Add':
-        UF = 3
-    elif nome == 'Divide':
-        UF = 4
-    else:
-        UF = 5
-    return UF
-
-
 '''
 Funçao responsável por escrever o arquivo de saida
 '''
@@ -469,6 +260,27 @@ def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncionalStatus],
 
 
 '''
+Retorna a UF que irá escrever no registrador
+'''
+
+
+def setUF(nome: str):
+    if nome == 'Integer':
+        UF = 0
+    elif nome == 'Mult1':
+        UF = 1
+    elif nome == 'Mult2':
+        UF = 2
+    elif nome == 'Add':
+        UF = 3
+    elif nome == 'Divide':
+        UF = 4
+    else:
+        UF = 5
+    return UF
+
+
+'''
 Verifica se existe o Hazzard WAW usada no issue
 '''
 
@@ -582,7 +394,7 @@ def read_operands(scoreboarding: Scoreboarding,  clock: int, regiEscrita: regEsc
     for i in range(len(scoreboarding.getUFs())):
         if scoreboarding.getUF(i).isBusy() and i not in regiEscrita.getUF():
             if scoreboarding.getUF(i).isrj() and scoreboarding.getUF(i).isrk():
-                if scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getIssue() < clock and scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getLeitura() == -1:
+                if scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getIssue() < clock:
                     scoreboarding.getOP(scoreboarding.getUF(
                         i).getpc()).setLeitura(clock)
                     scoreboarding.getUF(i).setrj(False)
@@ -619,8 +431,7 @@ def execution(scoreboarding: Scoreboarding, clock: int):
                         scoreboarding.getOP(scoreboarding.getUF(
                             i).getpc()).setExecucaof(clock)
                 elif scoreboarding.getUF(i).getOP() == 'muld':
-                    if clock - scoreboarding.getOP(scoreboarding.getUF(
-                            i).getpc()).getExecucaoi() == 9:
+                    if clock - scoreboarding.getOP(scoreboarding.getUF(i).getpc()).getExecucaoi() == 9:
                         scoreboarding.getOP(scoreboarding.getUF(
                             i).getpc()).setExecucaof(clock)
                 elif scoreboarding.getUF(i).getOP() == 'divd':
@@ -679,97 +490,13 @@ def isVazio(unidadesFuncionais: List[UnidadeFuncionalStatus], memoria, pc: int) 
     return False
 
 
-'''
-Verifica se o arquivo de entrada possui a sintaxe das instruçoes correta
-'''
-
-
-def verificaOP(memoria):
-    operacoes = ['ld', 'muld', 'addd', 'subd', 'divd']
-    for i in range(len(memoria)):
-        if memoria[i][0] not in operacoes:
-            print("arquivo de entrada com sintaxe errada")
-            exit()
-
-
-'''
-Verifica se o arquivo de entrada possui a sintaxe dos operandos correta
-'''
-
-
-def verificaOperandos(memoria):
-    operandos = ['r0', 'r1', 'r2', 'r3', 'r4', 'r5',
-                 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12', 'rb']
-    for i in range(len(memoria)):
-        if len(memoria[i][1]) < 2:
-            print("Arquivo de entrada com operandos errados")
-            exit()
-        else:
-            if memoria[i][0] == 'ld':
-                aux = memoria[i][1][1]
-                aux = aux.split(')')
-                aux[0] = aux[0].replace('(', '')
-                memoria[i][1][1] = aux[0]
-                try:
-                    memoria[i][1].append(aux[1])
-                except IndexError:
-                    print("sintaxe de uma instrucao ld esta errada")
-                    exit()
-            for j in range(len(memoria[i][1])):
-                memoria[i][1][j] = memoria[i][1][j].strip()
-                if len(memoria[i][1]) > 3:
-                    print("Arquivo de entrada com operandos errados")
-                    exit()
-                elif memoria[i][1][j] not in operandos:
-                    if memoria[i][0] == 'ld':
-                        try:
-                            int(memoria[i][1][1])
-                        except ValueError:
-                            print("Arquivo de entrada com operandos errados")
-                            exit()
-                    else:
-                        print("Arquivo de entrada com operandos errados")
-                        exit()
-
-    return
-
-
-'''
-Lê o arquivo de entrada e armazena as instruções na memória
-e inicializa um arquivo em branco que será a saida
-'''
-
-
-def lerArq(nome_arq: str) -> Tuple[str, List[str]]:
-    try:
-        arquivo = open(nome_arq, 'r')
-        memoria = arquivo.read().splitlines()
-        for i in range(len(memoria)):
-            memoria[i] = memoria[i].split(' ', 1)
-            memoria[i][1] = memoria[i][1].split(',')
-        verificaOP(memoria)
-        verificaOperandos(memoria)
-        nome_arq = nome_arq.split('.')
-        saida = nome_arq[0]
-        saida = saida+'.out'
-        arquivo = open(saida, 'w')
-        return memoria
-    except FileNotFoundError:
-        print("O arquivo nao existe tente executar novamente")
-        exit()
-
-
-'''
-Funçao que representa o simulador do pipeline
-'''
-
-
 def pipeline(memoria: Tuple[str, List[str]]):
     pc = 0
-    clock = 1
+    clock = 0
     regBusca = operacoesStatus()
     regiEscrita = regEscrita()
     scoreboarding = Scoreboarding()
+    clock = clock+1
     regBusca = buscaOp(memoria, pc)
     writestatus(sys.argv[1], scoreboarding.getUFs(),
                 scoreboarding.getOPs(), scoreboarding.getRegs(), clock)
