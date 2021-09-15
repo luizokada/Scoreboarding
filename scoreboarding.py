@@ -1,6 +1,6 @@
 import sys
 from typing import List, Tuple
-from instrucao import operacao
+from instrucao import instrucao
 from componentes import Scoreboarding, UnidadeFuncional, bancoRegistradores
 from arquivo import writestatus, lerArq
 
@@ -52,9 +52,9 @@ class processador:
     retorna o registrador que dentro dele tem a próxima instrução que deve ser emitida
     '''
 
-    def buscaOp(self, memoria, operacoes: List[operacao], registradores: bancoRegistradores):
-
-        if registradores.getPC() == 0 and operacoes[registradores.getPC()].getIssue() == -1:
+    def buscaOp(self, memoria, operacoes: List[instrucao], registradores: bancoRegistradores, issued: bool):
+        # tratamento para o primeiro ciclo de clock quando nao se tem nada no pipeline
+        if registradores.getPC() == 0 and not issued:
             registradores.getReBusca().setOP(memoria[registradores.getPC()][0])
             registradores.getReBusca().setfi(
                 memoria[registradores.getPC()][1][0].strip())
@@ -63,8 +63,8 @@ class processador:
             registradores.getReBusca().setfk(
                 memoria[registradores.getPC()][1][2].strip())
             operacoes[0] = registradores.getReBusca()
-        elif registradores.getPC() < len(memoria) and operacoes[registradores.getPC()].getIssue() != -1:
-            registradores.setReBusca(operacao())
+        elif registradores.getPC() < len(memoria) and issued:
+            registradores.setReBusca(instrucao())
             if registradores.getPC()+1 < len(memoria):
                 registradores.getReBusca().setOP(
                     memoria[registradores.getPC()+1][0])
@@ -88,14 +88,13 @@ class processador:
     '''
 
     def pipeline(self, memoria: Tuple[str, List[str]]):
-        self.clock = self.clock+1
-        self.buscaOp(memoria, self.scoreboard.getOPs(), self.registradores)
         while self.isVazio(self.unidadeFuncionais, memoria, self.registradores.getPC()):
             self.clock = self.clock+1
             self.novoCiclo(self.unidadeFuncionais)
             self.scoreboard.bookkeeping(
                 self.unidadeFuncionais, self.clock, self.registradores)
-            self.buscaOp(memoria, self.scoreboard.getOPs(), self.registradores)
+            self.buscaOp(memoria, self.scoreboard.getOPs(),
+                         self.registradores, self.scoreboard.isIssued())
             writestatus(sys.argv[1], self.unidadeFuncionais,
                         self.scoreboard.getOPs(), self.scoreboard.getRegs(), self.clock)
         self.clock = self.clock+1

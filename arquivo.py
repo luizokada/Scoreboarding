@@ -1,7 +1,7 @@
 import re
 from typing import List, Tuple
 from componentes import UnidadeFuncional
-from instrucao import operacao
+from instrucao import instrucao
 
 '''
 Verifica se o arquivo de entrada possui a sintaxe das instruçoes correta
@@ -88,7 +88,7 @@ Funçao responsável por escrever o arquivo de saida
 '''
 
 
-def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], operacoes: List[operacao], registradores: List[str], clock: int):
+def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], instrucao: List[instrucao], registradores: List[str], clock: int):
     nome_arq = nome_arq.split('.')
     saida = nome_arq[0]
     saida = saida+'.out'
@@ -99,48 +99,48 @@ def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], opera
     arquivo.write(
         'OP    |Fi  |Fj  |Fk  |issue\t\t|read\t\t|Execution\t|write\t\t|\n')
 
-    for i in range(len(operacoes)):
-        if operacoes[i].getOP() == 'ld':
-            arquivo.write(operacoes[i].getOP()+'    |')
+    for i in range(len(instrucao)):
+        if instrucao[i].getOP() == 'ld':
+            arquivo.write(instrucao[i].getOP()+'    |')
         else:
-            if operacoes[i].getOP() == 'multd':
-                arquivo.write(operacoes[i].getOP()+' |')
+            if instrucao[i].getOP() == 'multd':
+                arquivo.write(instrucao[i].getOP()+' |')
             else:
-                arquivo.write(operacoes[i].getOP()+'  |')
-        if abs(int(re.sub('[^0-9]', '', operacoes[i].getfi()))) > 9:
-            arquivo.write(operacoes[i].getfi()+' |')
+                arquivo.write(instrucao[i].getOP()+'  |')
+        if abs(int(re.sub('[^0-9]', '', instrucao[i].getfi()))) > 9:
+            arquivo.write(instrucao[i].getfi()+' |')
         else:
-            arquivo.write(operacoes[i].getfi()+'  |')
-        if abs(int(re.sub('[^0-9]', '', operacoes[i].getfj()))) > 9:
-            arquivo.write(operacoes[i].getfj()+' |')
+            arquivo.write(instrucao[i].getfi()+'  |')
+        if abs(int(re.sub('[^0-9]', '', instrucao[i].getfj()))) > 9:
+            arquivo.write(instrucao[i].getfj()+' |')
         else:
-            arquivo.write(operacoes[i].getfj()+'  |')
-        if operacoes[i].getfk() != 'rb':
-            if abs(int(re.sub('[^0-9]', '', operacoes[i].getfk()))) > 9:
-                arquivo.write(operacoes[i].getfk()+' |')
+            arquivo.write(instrucao[i].getfj()+'  |')
+        if instrucao[i].getfk() != 'rb':
+            if abs(int(re.sub('[^0-9]', '', instrucao[i].getfk()))) > 9:
+                arquivo.write(instrucao[i].getfk()+' |')
             else:
-                arquivo.write(operacoes[i].getfk()+'  |')
+                arquivo.write(instrucao[i].getfk()+'  |')
         else:
-            arquivo.write(operacoes[i].getfk()+'  |')
-        if operacoes[i].getIssue() != -1:
-            arquivo.write('\t\t'+str(operacoes[i].getIssue())+'\t|')
+            arquivo.write(instrucao[i].getfk()+'  |')
+        if instrucao[i].getIssue() != -1:
+            arquivo.write('\t\t'+str(instrucao[i].getIssue())+'\t|')
         else:
             arquivo.write('     ')
-        if operacoes[i].getLeitura() != -1:
-            arquivo.write(str(operacoes[i].getLeitura())+'\t\t|')
+        if instrucao[i].getLeitura() != -1:
+            arquivo.write(str(instrucao[i].getLeitura())+'\t\t|')
         else:
             arquivo.write('\t\t|')
-        if operacoes[i].getExecucaoi() != -1:
-            if operacoes[i].getExecucaof() != -1:
-                arquivo.write(str(operacoes[i].getExecucaoi()) +
-                              '-'+str(operacoes[i].getExecucaof())+'\t\t|')
+        if instrucao[i].getExecucaoi() != -1:
+            if instrucao[i].getExecucaof() != -1:
+                arquivo.write(str(instrucao[i].getExecucaoi()) +
+                              '-'+str(instrucao[i].getExecucaof())+'\t\t|')
             else:
-                arquivo.write(str(operacoes[i].getExecucaoi()) +
+                arquivo.write(str(instrucao[i].getExecucaoi()) +
                               ' - \t\t|')
         else:
             arquivo.write('\t\t|')
-        if operacoes[i].getEscrita() != -1:
-            arquivo.write(str(operacoes[i].getEscrita())+'\t\t|'+'\n')
+        if instrucao[i].getEscrita() != -1:
+            arquivo.write(str(instrucao[i].getEscrita())+'\t\t|'+'\n')
         else:
             arquivo.write('\t\t|\n')
     arquivo.write('\n')

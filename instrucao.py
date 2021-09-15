@@ -3,7 +3,7 @@ Classe que representa os status das instruçoes
 '''
 
 
-class operacao:
+class instrucao:
     def __init__(self) -> None:
         self.op = ''         # OP que esta na unidade funcional
         self.fi = ''         # registrador destino

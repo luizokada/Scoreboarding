@@ -1,6 +1,6 @@
 
+from instrucao import instrucao
 from typing import List, Tuple
-from instrucao import operacao
 import re
 '''
 Registrador do estágio escrita
@@ -10,7 +10,7 @@ Registrador do estágio escrita
 class bancoRegistradores:
     def __init__(self) -> None:
         self.pc = 0  # registrador PC
-        self.regBusca = operacao()  # registrador da busca
+        self.regBusca = instrucao()  # registrador da busca
         # registrado escrita, serve para marcar os resgistradores que foram alterados no estagio da escrita
         self.regEscrita = []
         pass
@@ -24,11 +24,17 @@ class bancoRegistradores:
     def getReBusca(self):
         return self.regBusca
 
-    def setReBusca(self, operacao: operacao):
-        self.regBusca = operacao
+    def setReBusca(self, instrucao: instrucao):
+        self.regBusca = instrucao
 
     def getRegEscrita(self):
         return self.regEscrita
+
+    def resetRegEscrita(self):
+        self.regEscrita = []
+
+    def setRegEscrita(self, i: int):
+        self.regEscrita.append(i)
 
 
 '''
@@ -50,8 +56,11 @@ class UnidadeFuncional:
         self.rk = True      # flag para fk
         self.pc = -1        # pc da instruçao usando a unidade funcional
         self.usada = False  # flag para saber se a unidade funcional pode executar um acao no ciclo
-        # flag para saber se a unidade funcional pode executar um acao no ciclo
+        # flag que alerta o scoreboarding que a leitura foi finalizada
+        self.readOperands = False
+        # flag que alerta o scoreboarding que a execuçao de um instruçao foi finalizada
         self.executed = False
+
         pass
     '''
     sets e gets dos atributos    
@@ -62,6 +71,12 @@ class UnidadeFuncional:
 
     def setUsado(self, usado: bool):
         self.usada = usado
+
+    def isOPread(self) -> bool:
+        return self.readOperands
+
+    def setOpread(self, ex: bool):
+        self.readOperands = ex
 
     def isExecuted(self) -> bool:
         return self.executed
@@ -149,6 +164,7 @@ class UnidadeFuncional:
         self.qk = ''
         self.rj = True
         self.rk = True
+        self.readOperands = False
         self.executed = False
         self.pc = -1
 
@@ -161,16 +177,23 @@ Classe que representa o scoreboarding
 class Scoreboarding:
     def __init__(self) -> None:
         # status das instruções que ja passaram do estágio de busca
-        self.statusOp = [operacao()]
+        self.statusOp = [instrucao()]
         self.registradores = ['']*14  # status dos registradores
+        self.issued = False  # variavel que notifica para o processador que foi feito uma emissao
     ''' 
     Set e gets dessa classe
     '''
 
-    def getOPs(self) -> List[operacao]:
+    def setIssued(self, issued: bool):
+        self.issued = issued
+
+    def isIssued(self):
+        return self.issued
+
+    def getOPs(self) -> List[instrucao]:
         return self.statusOp
 
-    def getOP(self, i: int) -> operacao:
+    def getOP(self, i: int) -> instrucao:
         return self.statusOp[i]
 
     def getRegs(self) -> List[str]:
@@ -182,16 +205,16 @@ class Scoreboarding:
     def setReg(self, i: int, nome: str):
         self.registradores[i] = nome
 
-    def setOP(self, OP: operacao):
+    def setOP(self, OP: instrucao):
         self.statusOp.append(OP)
 
-    def isWAW(self, operacao: operacao, registradores: List[str], regEscrita: List[int]) -> bool:
-        if operacao.getfi() == 'rb':
+    def isWAW(self, instrucao: instrucao, registradores: List[str], regEscrita: List[int]) -> bool:
+        if instrucao.getfi() == 'rb':
             if registradores[13] == '' and 13 not in regEscrita.getRef():
                 return False
             else:
                 return True
-        elif registradores[int(re.sub('[^0-9]', '', operacao.getfi()))] == '' and int(re.sub('[^0-9]', '', operacao.getfi())) not in regEscrita:
+        elif registradores[int(re.sub('[^0-9]', '', instrucao.getfi()))] == '' and int(re.sub('[^0-9]', '', instrucao.getfi())) not in regEscrita:
             return False
         else:
             return True
@@ -210,28 +233,28 @@ class Scoreboarding:
     funçao issue do scoreboarding
     '''
 
-    def issue(self, operacao: operacao, unidadeFuncionais: List[UnidadeFuncional], pc: int, clock: int, regEscrita) -> int:
-        if not operacao.isVazio() and not self.isWAW(operacao, self.getRegs(), regEscrita):
-            if operacao.getOP() == 'ld':
+    def issue(self, instrucao: instrucao, unidadeFuncionais: List[UnidadeFuncional], pc: int, clock: int, regEscrita) -> int:
+        if not instrucao.isVazio() and not self.isWAW(instrucao, self.getRegs(), regEscrita):
+            if instrucao.getOP() == 'ld':
                 UF = 0
-            elif operacao.getOP() == 'muld':
+            elif instrucao.getOP() == 'muld':
                 if not unidadeFuncionais[1].isBusy():
                     UF = 1
                 else:
                     UF = 2
-            elif operacao.getOP() == 'addd' or operacao.getOP() == 'subd':
+            elif instrucao.getOP() == 'addd' or instrucao.getOP() == 'subd':
                 UF = 3
-            elif operacao.getOP() == 'divd':
+            elif instrucao.getOP() == 'divd':
                 UF = 4
             else:
                 return
             if not unidadeFuncionais[UF].isBusy() and not unidadeFuncionais[UF].isUsado():
-                unidadeFuncionais[UF].setOP(operacao.getOP())
-                unidadeFuncionais[UF].setfi(operacao.getfi())
-                unidadeFuncionais[UF].setfk(operacao.getfk())
+                unidadeFuncionais[UF].setOP(instrucao.getOP())
+                unidadeFuncionais[UF].setfi(instrucao.getfi())
+                unidadeFuncionais[UF].setfk(instrucao.getfk())
                 unidadeFuncionais[UF].setpc(pc)
                 self.setReg(
-                    int(re.sub('[^0-9]', '', operacao.getfi())), unidadeFuncionais[UF].getNome())
+                    int(re.sub('[^0-9]', '', instrucao.getfi())), unidadeFuncionais[UF].getNome())
                 try:
                     int(self.getOP(pc).getfj())
                     unidadeFuncionais[UF].setqj('')
@@ -240,7 +263,7 @@ class Scoreboarding:
                         unidadeFuncionais[UF].setqk(self.getReg(13))
                     else:
                         unidadeFuncionais[UF].setqk(self.getReg(
-                            int(re.sub('[^0-9]', '', operacao.getfk()))))
+                            int(re.sub('[^0-9]', '', instrucao.getfk()))))
                 except ValueError:
                     unidadeFuncionais[UF].setfj(self.getOP(pc).getfj())
                     unidadeFuncionais[UF].setqk(
@@ -254,10 +277,13 @@ class Scoreboarding:
                     unidadeFuncionais[UF].setrk(False)
                 self.getOP(pc).setIssue(clock)
                 unidadeFuncionais[UF].setUsado(True)
+                self.setIssued(True)
                 return
             else:
+                self.setIssued(False)
                 return
         else:
+            self.setIssued(False)
             return
     '''
     funçao read_operands do scoreboarding
@@ -271,6 +297,7 @@ class Scoreboarding:
                     unidadeFuncionais[i].setrj(False)
                     unidadeFuncionais[i].setrk(False)
                     unidadeFuncionais[i].setUsado(True)
+                    unidadeFuncionais[i].setOpread(True)
         return
 
     '''
@@ -286,44 +313,43 @@ class Scoreboarding:
 
     def execution(self, clock: int, unidadeFuncionais: List[UnidadeFuncional]):
         for i in range(len(unidadeFuncionais)):
-            if unidadeFuncionais[i].isBusy() and not unidadeFuncionais[i].isUsado():
-                if (not unidadeFuncionais[i].isrj() and not unidadeFuncionais[i].isrk()) and unidadeFuncionais[i].getqj() == '' and unidadeFuncionais[i].getqk() == '':
-                    if self.getOP(unidadeFuncionais[i].getpc()).getExecucaoi() == -1:
-                        self.getOP(
-                            unidadeFuncionais[i].getpc()).setExecucaoi(clock)
-                        unidadeFuncionais[i].setUsado(True)
-                        unidadeFuncionais[i].setExecuted(False)
-                    count = clock - \
-                        self.getOP(unidadeFuncionais[i].getpc()).getExecucaoi()
-                    if unidadeFuncionais[i].getOP() == 'ld' and count == 0:
+            if unidadeFuncionais[i].isOPread() and not unidadeFuncionais[i].isUsado():
+                if self.getOP(unidadeFuncionais[i].getpc()).getExecucaoi() == -1:
+                    self.getOP(
+                        unidadeFuncionais[i].getpc()).setExecucaoi(clock)
+                    unidadeFuncionais[i].setUsado(True)
+                    unidadeFuncionais[i].setExecuted(False)
+                count = clock - \
+                    self.getOP(unidadeFuncionais[i].getpc()).getExecucaoi()
+                if unidadeFuncionais[i].getOP() == 'ld' and count == 0:
+                    self.getOP(
+                        unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                    unidadeFuncionais[i].setExecuted(True)
+                elif unidadeFuncionais[i].getOP() == 'addd' or unidadeFuncionais[i].getOP() == 'subd':
+                    if count == 1:
                         self.getOP(
                             unidadeFuncionais[i].getpc()).setExecucaof(clock)
                         unidadeFuncionais[i].setExecuted(True)
-                    elif unidadeFuncionais[i].getOP() == 'addd' or unidadeFuncionais[i].getOP() == 'subd':
-                        if count == 1:
-                            self.getOP(
-                                unidadeFuncionais[i].getpc()).setExecucaof(clock)
-                            unidadeFuncionais[i].setExecuted(True)
-                            unidadeFuncionais[i].setUsado(True)
-                        elif count < 1:
-                            unidadeFuncionais[i].setUsado(True)
-                            unidadeFuncionais[i].setExecuted(False)
-                    elif unidadeFuncionais[i].getOP() == 'muld':
-                        if count == 9:
-                            unidadeFuncionais[i].setExecuted(True)
-                            self.getOP(
-                                unidadeFuncionais[i].getpc()).setExecucaof(clock)
-                        elif count < 9:
-                            unidadeFuncionais[i].setUsado(True)
-                            unidadeFuncionais[i].setExecuted(False)
-                    elif unidadeFuncionais[i].getOP() == 'divd':
-                        if count == 39:
-                            unidadeFuncionais[i].setExecuted(True)
-                            self.getOP(
-                                unidadeFuncionais[i].getpc()).setExecucaof(clock)
-                        elif count < 39:
-                            unidadeFuncionais[i].setUsado(False)
-                            unidadeFuncionais[i].setExecuted(False)
+                        unidadeFuncionais[i].setUsado(True)
+                    elif count < 1:
+                        unidadeFuncionais[i].setUsado(True)
+                        unidadeFuncionais[i].setExecuted(False)
+                elif unidadeFuncionais[i].getOP() == 'muld':
+                    if count == 9:
+                        unidadeFuncionais[i].setExecuted(True)
+                        self.getOP(
+                            unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                    elif count < 9:
+                        unidadeFuncionais[i].setUsado(True)
+                        unidadeFuncionais[i].setExecuted(False)
+                elif unidadeFuncionais[i].getOP() == 'divd':
+                    if count == 39:
+                        unidadeFuncionais[i].setExecuted(True)
+                        self.getOP(
+                            unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                    elif count < 39:
+                        unidadeFuncionais[i].setUsado(False)
+                        unidadeFuncionais[i].setExecuted(False)
         return
 
     '''
@@ -331,37 +357,38 @@ class Scoreboarding:
     registrador que nele contem as UFs e registradores que foram alterados n estágio da escrita
     '''
 
-    def writeResults(self, clock: int, unidadeFuncionais: List[UnidadeFuncional], registradorEscrita: List[int]):
-        registradorEscrita = []
+    def writeResults(self, clock: int, unidadeFuncionais: List[UnidadeFuncional], registradores: bancoRegistradores):
+        # toda vez que entra na escrita reseta esse registrador pois ja se alterou o ciclo
+        registradores.resetRegEscrita()
         for i in range(len(unidadeFuncionais)):
-            if unidadeFuncionais[i].isBusy():
-                if not self.isWAR(unidadeFuncionais[i], unidadeFuncionais) and not unidadeFuncionais[i].isUsado():
-                    if unidadeFuncionais[i].isExecuted():
-                        self.getOP(
-                            unidadeFuncionais[i].getpc()).setEscrita(clock)
-                        unidadeFuncionais[i].setUsado(True)
-                        for j in range(len(unidadeFuncionais)):
-                            if unidadeFuncionais[j].getqj() == unidadeFuncionais[i].getNome():
-                                unidadeFuncionais[j].setqj('')
-                                unidadeFuncionais[j].setrj(True)
-                                unidadeFuncionais[j].setUsado(True)
-                            if unidadeFuncionais[j].getqk() == unidadeFuncionais[i].getNome():
-                                unidadeFuncionais[j].setqk('')
-                                unidadeFuncionais[j].setrk(True)
-                                unidadeFuncionais[j].setUsado(True)
-                        self.setReg(int(
-                            re.sub('[^0-9]', '', unidadeFuncionais[i].getfi())), '')
-                        registradorEscrita.append(int(
-                            re.sub('[^0-9]', '', unidadeFuncionais[i].getfi())))
-                        unidadeFuncionais[i].reset()
+            if unidadeFuncionais[i].isExecuted() and not unidadeFuncionais[i].isUsado():
+                if not self.isWAR(unidadeFuncionais[i], unidadeFuncionais):
+                    self.getOP(
+                        unidadeFuncionais[i].getpc()).setEscrita(clock)
+                    unidadeFuncionais[i].setUsado(True)
+                    for j in range(len(unidadeFuncionais)):
+                        if unidadeFuncionais[j].getqj() == unidadeFuncionais[i].getNome():
+                            unidadeFuncionais[j].setqj('')
+                            unidadeFuncionais[j].setrj(True)
+                            unidadeFuncionais[j].setUsado(True)
+                        if unidadeFuncionais[j].getqk() == unidadeFuncionais[i].getNome():
+                            unidadeFuncionais[j].setqk('')
+                            unidadeFuncionais[j].setrk(True)
+                            unidadeFuncionais[j].setUsado(True)
+                    self.setReg(int(
+                        re.sub('[^0-9]', '', unidadeFuncionais[i].getfi())), '')
+                    # salva o id do registrador que foi alterado nesse ciclo, para evitar que ocorra uma emissão
+                    # de instruções que estavam bloqueda por WAW
+                    registradores.setRegEscrita(int(
+                        re.sub('[^0-9]', '', unidadeFuncionais[i].getfi())))
+                    unidadeFuncionais[i].reset()
         return
     '''
     Funçao qeu simula o Bookkeeping
     '''
 
     def bookkeeping(self, unidadeFuncionais: List[UnidadeFuncional], clock: int, registradores: bancoRegistradores):
-        self.writeResults(clock, unidadeFuncionais,
-                          registradores.getRegEscrita())
+        self.writeResults(clock, unidadeFuncionais, registradores)
         self.execution(clock, unidadeFuncionais)
         self.read_operands(clock, unidadeFuncionais)
         self.issue(registradores.getReBusca(), unidadeFuncionais,

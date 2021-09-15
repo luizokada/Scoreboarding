@@ -1,3 +1,21 @@
+Clock:1
+--------------------------------Status operacoes-------------------------------------
+OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
+addd  |r1  |r2  |r3  |     		|		|		|
+
+------------------------Status Unidades Funcionais-------------------------
+FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
+Integer|False	|      |    |    |    |         |         |       |       |
+Mult1  |False	|      |    |    |    |         |         |       |       |
+Mult2  |False	|      |    |    |    |         |         |       |       |
+Add    |False	|      |    |    |    |         |         |       |       |
+Divide |False	|      |    |    |    |         |         |       |       |
+
+----------------------------------------------Status Registradores--------------------------------------------------
+    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
+UF  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------------------------------------------
+
 Clock:2
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
@@ -182,7 +200,28 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|		|		|		|
+ld    |r10 |10 |rb  |     		|		|		|
+
+------------------------Status Unidades Funcionais-------------------------
+FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
+Integer|False	|      |    |    |    |         |         |       |       |
+Mult1  |False	|      |    |    |    |         |         |       |       |
+Mult2  |False	|      |    |    |    |         |         |       |       |
+Add    |False	|      |    |    |    |         |         |       |       |
+Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
+
+----------------------------------------------Status Registradores--------------------------------------------------
+    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
+UF  |       |       |       |       |       |       |       |       |Divide |       |       |       |       |       |
+--------------------------------------------------------------------------------------------------------------------
+
+Clock:12
+--------------------------------Status operacoes-------------------------------------
+OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
+addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
+subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
+divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
+ld    |r10 |10 |rb  |		12	|		|		|		|
 muld  |r9  |r10 |r3  |     		|		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
@@ -198,37 +237,14 @@ Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
 UF  |       |       |       |       |       |       |       |       |Divide |       |Integer|       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:12
---------------------------------Status operacoes-------------------------------------
-OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
-addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
-subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
-divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|		|		|
-muld  |r9  |r10 |r3  |		12	|		|		|		|
-ld    |r3  |10 |r2  |     		|		|		|
-
-------------------------Status Unidades Funcionais-------------------------
-FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
-Integer|True	|ld    |r10 |	 |rb  |         |         |False  |False  |
-Mult1  |True	|muld  |r9  |r10 |r3  |Integer  |         |False  |True   |
-Mult2  |False	|      |    |    |    |         |         |       |       |
-Add    |False	|      |    |    |    |         |         |       |       |
-Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
-
-----------------------------------------------Status Registradores--------------------------------------------------
-    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |       |       |       |       |       |       |Divide |Mult1  |Integer|       |       |       |
---------------------------------------------------------------------------------------------------------------------
-
 Clock:13
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|		|
-muld  |r9  |r10 |r3  |		12	|		|		|		|
+ld    |r10 |10 |rb  |		12	|13		|		|		|
+muld  |r9  |r10 |r3  |		13	|		|		|		|
 ld    |r3  |10 |r2  |     		|		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
@@ -250,8 +266,31 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|		|		|		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|		|
+muld  |r9  |r10 |r3  |		13	|		|		|		|
+ld    |r3  |10 |r2  |     		|		|		|
+
+------------------------Status Unidades Funcionais-------------------------
+FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
+Integer|True	|ld    |r10 |	 |rb  |         |         |False  |False  |
+Mult1  |True	|muld  |r9  |r10 |r3  |Integer  |         |False  |True   |
+Mult2  |False	|      |    |    |    |         |         |       |       |
+Add    |False	|      |    |    |    |         |         |       |       |
+Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
+
+----------------------------------------------Status Registradores--------------------------------------------------
+    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
+UF  |       |       |       |       |       |       |       |       |Divide |Mult1  |Integer|       |       |       |
+--------------------------------------------------------------------------------------------------------------------
+
+Clock:15
+--------------------------------Status operacoes-------------------------------------
+OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
+addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
+subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
+divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|		|		|		|
 ld    |r3  |10 |r2  |     		|		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
@@ -267,42 +306,19 @@ Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
 UF  |       |       |       |       |       |       |       |       |Divide |Mult1  |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
-Clock:15
---------------------------------Status operacoes-------------------------------------
-OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
-addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
-subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
-divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|		|		|
-ld    |r3  |10 |r2  |		15	|		|		|		|
-
-------------------------Status Unidades Funcionais-------------------------
-FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
-Integer|True	|ld    |r3  |	 |r2  |         |         |True   |True   |
-Mult1  |True	|muld  |r9  |r10 |r3  |         |         |False  |False  |
-Mult2  |False	|      |    |    |    |         |         |       |       |
-Add    |False	|      |    |    |    |         |         |       |       |
-Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
-
-----------------------------------------------Status Registradores--------------------------------------------------
-    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |       |Integer|       |       |       |       |Divide |Mult1  |       |       |       |       |
---------------------------------------------------------------------------------------------------------------------
-
 Clock:16
 --------------------------------Status operacoes-------------------------------------
 OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|		|		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|		|		|
+ld    |r3  |10 |r2  |		16	|		|		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
-Integer|True	|ld    |r3  |	 |r2  |         |         |False  |False  |
+Integer|True	|ld    |r3  |	 |r2  |         |         |True   |True   |
 Mult1  |True	|muld  |r9  |r10 |r3  |         |         |False  |False  |
 Mult2  |False	|      |    |    |    |         |         |       |       |
 Add    |False	|      |    |    |    |         |         |       |       |
@@ -319,9 +335,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -342,13 +358,13 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
-Integer|False	|      |    |    |    |         |         |       |       |
+Integer|True	|ld    |r3  |	 |r2  |         |         |False  |False  |
 Mult1  |True	|muld  |r9  |r10 |r3  |         |         |False  |False  |
 Mult2  |False	|      |    |    |    |         |         |       |       |
 Add    |False	|      |    |    |    |         |         |       |       |
@@ -356,7 +372,7 @@ Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
 
 ----------------------------------------------Status Registradores--------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |       |       |       |       |       |       |Divide |Mult1  |       |       |       |       |
+UF  |       |       |       |Integer|       |       |       |       |Divide |Mult1  |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
 Clock:19
@@ -365,9 +381,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -388,9 +404,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -411,9 +427,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -434,9 +450,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -457,9 +473,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -480,9 +496,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16 - 		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -503,9 +519,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17 - 		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -526,21 +542,21 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
 Integer|False	|      |    |    |    |         |         |       |       |
-Mult1  |False	|      |    |    |    |         |         |       |       |
+Mult1  |True	|muld  |r9  |r10 |r3  |         |         |False  |False  |
 Mult2  |False	|      |    |    |    |         |         |       |       |
 Add    |False	|      |    |    |    |         |         |       |       |
 Divide |True	|divd  |r8  |r7  |r6  |         |         |False  |False  |
 
 ----------------------------------------------Status Registradores--------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
-UF  |       |       |       |       |       |       |       |       |Divide |       |       |       |       |       |
+UF  |       |       |       |       |       |       |       |       |Divide |Mult1  |       |       |       |       |
 --------------------------------------------------------------------------------------------------------------------
 
 Clock:27
@@ -549,9 +565,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -572,9 +588,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -595,9 +611,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -618,9 +634,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -641,9 +657,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -664,9 +680,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -687,9 +703,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -710,9 +726,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -733,9 +749,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -756,9 +772,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -779,9 +795,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -802,9 +818,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -825,9 +841,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -848,9 +864,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -871,9 +887,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -894,9 +910,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -917,9 +933,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -940,9 +956,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -963,9 +979,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -986,9 +1002,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -1009,9 +1025,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -1032,9 +1048,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10 - 		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -1055,9 +1071,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10-49		|		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -1078,9 +1094,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10-49		|50		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
@@ -1101,9 +1117,9 @@ OP    |Fi  |Fj  |Fk  |issue		|read		|Execution	|write		|
 addd  |r1  |r2  |r3  |		2	|3		|4-5		|6		|
 subd  |r10 |r12 |r1  |		7	|8		|9-10		|11		|
 divd  |r8  |r7  |r6  |		8	|9		|10-49		|50		|
-ld    |r10 |10 |rb  |		11	|12		|13-13		|14		|
-muld  |r9  |r10 |r3  |		12	|15		|16-25		|26		|
-ld    |r3  |10 |r2  |		15	|16		|17-17		|18		|
+ld    |r10 |10 |rb  |		12	|13		|14-14		|15		|
+muld  |r9  |r10 |r3  |		13	|16		|17-26		|27		|
+ld    |r3  |10 |r2  |		16	|17		|18-18		|19		|
 
 ------------------------Status Unidades Funcionais-------------------------
 FU     | Busy	|OP    |Fi  |Fj  |Fk  |Qj       |Qk       |Rj     |Rk     |
