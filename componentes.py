@@ -1,27 +1,34 @@
 
 from typing import List, Tuple
+from instrucao import operacao
+import re
 '''
 Registrador do estágio escrita
 '''
 
 
-class regEscrita:
+class bancoRegistradores:
     def __init__(self) -> None:
-        self.registradores = []
-        self.UF = []
-
-    def setRegistrdor(self, reg: int):
-        self.registradores.append(reg)
-
-    def setUF(self, reg: int):
-        self.UF.append(reg)
-
-    def getUF(self) -> List[int]:
-        return self.UF
-
-    def getRef(self) -> List[int]:
-        return self.registradores
+        self.pc = 0  # registrador PC
+        self.regBusca = operacao()  # registrador da busca
+        # registrado escrita, serve para marcar os resgistradores que foram alterados no estagio da escrita
+        self.regEscrita = []
         pass
+
+    def getPC(self):
+        return self.pc
+
+    def setPC(self, pc: int):
+        self.pc = pc
+
+    def getReBusca(self):
+        return self.regBusca
+
+    def setReBusca(self, operacao: operacao):
+        self.regBusca = operacao
+
+    def getRegEscrita(self):
+        return self.regEscrita
 
 
 '''
@@ -31,18 +38,36 @@ Classe que representa os status das unidade funcionais
 
 class UnidadeFuncional:
     def __init__(self) -> None:
-        self.nome = ''
-        self.busy = False
-        self.op = ''
-        self.fi = ''
-        self.fj = ''
-        self.fk = ''
-        self.qj = ''
-        self.qk = ''
-        self.rj = True
-        self.rk = True
-        self.pc = -1
+        self.nome = ''      # nome da Unidade Funcional
+        self.busy = False   # busy status
+        self.op = ''        # OP que esta na unidade funcional
+        self.fi = ''        # registrador destino
+        self.fj = ''        # operando 1
+        self.fk = ''        # operando 2
+        self.qj = ''        # unidades funcionais que produziram fj
+        self.qk = ''        # unidades funcionais que produziram fk
+        self.rj = True      # flag para fk
+        self.rk = True      # flag para fk
+        self.pc = -1        # pc da instruçao usando a unidade funcional
+        self.usada = False  # flag para saber se a unidade funcional pode executar um acao no ciclo
+        # flag para saber se a unidade funcional pode executar um acao no ciclo
+        self.executed = False
         pass
+    '''
+    sets e gets dos atributos    
+    '''
+
+    def isUsado(self) -> bool:
+        return self.usada
+
+    def setUsado(self, usado: bool):
+        self.usada = usado
+
+    def isExecuted(self) -> bool:
+        return self.executed
+
+    def setExecuted(self, ex: bool):
+        self.executed = ex
 
     def isBusy(self) -> bool:
         return self.busy
@@ -109,8 +134,9 @@ class UnidadeFuncional:
 
     def setpc(self, pc: int):
         self.pc = pc
+
     '''
-    define os atributos do objeto como ele foi criado
+    define os atributos da UF para o deafult(como ela foi criada)
     '''
 
     def reset(self):
@@ -123,99 +149,8 @@ class UnidadeFuncional:
         self.qk = ''
         self.rj = True
         self.rk = True
+        self.executed = False
         self.pc = -1
-
-
-'''
-Classe que representa os status das instruçoes
-'''
-
-
-class operacao:
-    def __init__(self) -> None:
-        self.op = ''
-        self.fi = ''
-        self.fj = ''
-        self.fk = ''
-        self.issue = -1
-        self.leitura = -1
-        self.execucaoi = -1
-        self.execucaof = -1
-        self.escrita = -1
-        self.finalizada = False
-    '''
-    Sets e gets dessa classe
-    '''
-
-    def isFinalizada(self):
-        return self.finalizada
-
-    def setFinalizada(self, finalizada):
-        self.finalizada = finalizada
-
-    def setOP(self, OP: str):
-        self.op = OP
-
-    def getOP(self) -> str:
-        return self.op
-
-    def setfi(self, fi):
-        self.fi = fi
-
-    def getfi(self) -> str:
-        return self.fi
-
-    def setfj(self, fj):
-        self.fj = fj
-
-    def getfj(self) -> str:
-        return self.fj
-
-    def setfk(self, fk):
-        self.fk = fk
-
-    def getfk(self) -> str:
-        return self.fk
-
-    def setIssue(self, issue: int):
-        self.issue = issue
-
-    def getIssue(self) -> int:
-        return self.issue
-
-    def setLeitura(self, leitura: int):
-        self.leitura = leitura
-
-    def getLeitura(self) -> int:
-        return self.leitura
-
-    def setExecucaoi(self, execucaoi: int):
-        self.execucaoi = execucaoi
-
-    def getExecucaoi(self) -> int:
-        return self.execucaoi
-
-    def setExecucaof(self, execucaof: int):
-        self.execucaof = execucaof
-
-    def getExecucaof(self) -> int:
-        return self.execucaof
-
-    def getEscrita(self) -> int:
-        return self.escrita
-
-    def setEscrita(self, escrita: int):
-        self.escrita = escrita
-    '''
-    Verifica se não existe operação
-    '''
-
-    def isVazio(self):
-        if self.op == '':
-            return True
-        else:
-            return False
-        pass
 
 
 '''
@@ -225,32 +160,12 @@ Classe que representa o scoreboarding
 
 class Scoreboarding:
     def __init__(self) -> None:
-        '''
-        unidadeFuncionais[0] = Intenger
-        unidadeFuncionais[1] = Mult1
-        unidadeFuncionais[2] = Mult2
-        unidadeFuncionais[3] = add
-        unidadeFuncionais[4] = Divide
-        registradoresStatus[0]....[12] = r0....r12
-        registradoresStatus[13] = rb
-        '''
-        self.unidadeFuncionais = [UnidadeFuncional() for _ in range(5)]
-        self.unidadeFuncionais[0].setNome('Integer')
-        self.unidadeFuncionais[1].setNome('Mult1')
-        self.unidadeFuncionais[2].setNome('Mult2')
-        self.unidadeFuncionais[3].setNome('Add')
-        self.unidadeFuncionais[4].setNome('Divide')
-        self.statusOp = []
-        self.registradores = ['']*14
+        # status das instruções que ja passaram do estágio de busca
+        self.statusOp = [operacao()]
+        self.registradores = ['']*14  # status dos registradores
     ''' 
     Set e gets dessa classe
     '''
-
-    def getUFs(self) -> List[UnidadeFuncional]:
-        return self.unidadeFuncionais
-
-    def getUF(self, UF: int) -> UnidadeFuncional:
-        return self.unidadeFuncionais[UF]
 
     def getOPs(self) -> List[operacao]:
         return self.statusOp
@@ -269,3 +184,185 @@ class Scoreboarding:
 
     def setOP(self, OP: operacao):
         self.statusOp.append(OP)
+
+    def isWAW(self, operacao: operacao, registradores: List[str], regEscrita: List[int]) -> bool:
+        if operacao.getfi() == 'rb':
+            if registradores[13] == '' and 13 not in regEscrita.getRef():
+                return False
+            else:
+                return True
+        elif registradores[int(re.sub('[^0-9]', '', operacao.getfi()))] == '' and int(re.sub('[^0-9]', '', operacao.getfi())) not in regEscrita:
+            return False
+        else:
+            return True
+
+    '''
+    Verifica se existe o Hazzard WAR 
+    usado no writing
+    '''
+
+    def isWAR(self, unidadeFuncional: UnidadeFuncional, unidadesFuncionais: List[UnidadeFuncional]) -> bool:
+        for i in range(len(unidadesFuncionais)):
+            if (unidadeFuncional.getfi() == unidadesFuncionais[i].getfj() and unidadesFuncionais[i].isrj()) or (unidadeFuncional.getfi() == unidadesFuncionais[i].getfk() and unidadesFuncionais[i].isrk()):
+                return True
+        return False
+    '''
+    funçao issue do scoreboarding
+    '''
+
+    def issue(self, operacao: operacao, unidadeFuncionais: List[UnidadeFuncional], pc: int, clock: int, regEscrita) -> int:
+        if not operacao.isVazio() and not self.isWAW(operacao, self.getRegs(), regEscrita):
+            if operacao.getOP() == 'ld':
+                UF = 0
+            elif operacao.getOP() == 'muld':
+                if not unidadeFuncionais[1].isBusy():
+                    UF = 1
+                else:
+                    UF = 2
+            elif operacao.getOP() == 'addd' or operacao.getOP() == 'subd':
+                UF = 3
+            elif operacao.getOP() == 'divd':
+                UF = 4
+            else:
+                return
+            if not unidadeFuncionais[UF].isBusy() and not unidadeFuncionais[UF].isUsado():
+                unidadeFuncionais[UF].setOP(operacao.getOP())
+                unidadeFuncionais[UF].setfi(operacao.getfi())
+                unidadeFuncionais[UF].setfk(operacao.getfk())
+                unidadeFuncionais[UF].setpc(pc)
+                self.setReg(
+                    int(re.sub('[^0-9]', '', operacao.getfi())), unidadeFuncionais[UF].getNome())
+                try:
+                    int(self.getOP(pc).getfj())
+                    unidadeFuncionais[UF].setqj('')
+                    unidadeFuncionais[UF].setfj('')
+                    if self.getOP(pc).getfk() == 'rb':
+                        unidadeFuncionais[UF].setqk(self.getReg(13))
+                    else:
+                        unidadeFuncionais[UF].setqk(self.getReg(
+                            int(re.sub('[^0-9]', '', operacao.getfk()))))
+                except ValueError:
+                    unidadeFuncionais[UF].setfj(self.getOP(pc).getfj())
+                    unidadeFuncionais[UF].setqk(
+                        self.getReg(int(re.sub('[^0-9]', '', self.getOP(pc).getfk()))))
+                    unidadeFuncionais[UF].setqj(
+                        self.getReg(int(re.sub('[^0-9]', '', self.getOP(pc).getfj()))))
+                unidadeFuncionais[UF].setBusy(True)
+                if unidadeFuncionais[UF].getqj() != '':
+                    unidadeFuncionais[UF].setrj(False)
+                if unidadeFuncionais[UF].getqk() != '':
+                    unidadeFuncionais[UF].setrk(False)
+                self.getOP(pc).setIssue(clock)
+                unidadeFuncionais[UF].setUsado(True)
+                return
+            else:
+                return
+        else:
+            return
+    '''
+    funçao read_operands do scoreboarding
+    '''
+
+    def read_operands(self,  clock: int, unidadeFuncionais: List[UnidadeFuncional]):
+        for i in range(len(unidadeFuncionais)):
+            if unidadeFuncionais[i].isBusy() and not unidadeFuncionais[i].isUsado():
+                if unidadeFuncionais[i].isrj() and unidadeFuncionais[i].isrk():
+                    self.getOP(unidadeFuncionais[i].getpc()).setLeitura(clock)
+                    unidadeFuncionais[i].setrj(False)
+                    unidadeFuncionais[i].setrk(False)
+                    unidadeFuncionais[i].setUsado(True)
+        return
+
+    '''
+    Função que executa uma operação que esta em uma UF
+    com as seguintes latencias de execução
+    OP      ciclos
+    ld      1
+    addd    2
+    subd    2
+    multd   10
+    divd    40
+    '''
+
+    def execution(self, clock: int, unidadeFuncionais: List[UnidadeFuncional]):
+        for i in range(len(unidadeFuncionais)):
+            if unidadeFuncionais[i].isBusy() and not unidadeFuncionais[i].isUsado():
+                if (not unidadeFuncionais[i].isrj() and not unidadeFuncionais[i].isrk()) and unidadeFuncionais[i].getqj() == '' and unidadeFuncionais[i].getqk() == '':
+                    if self.getOP(unidadeFuncionais[i].getpc()).getExecucaoi() == -1:
+                        self.getOP(
+                            unidadeFuncionais[i].getpc()).setExecucaoi(clock)
+                        unidadeFuncionais[i].setUsado(True)
+                        unidadeFuncionais[i].setExecuted(False)
+                    count = clock - \
+                        self.getOP(unidadeFuncionais[i].getpc()).getExecucaoi()
+                    if unidadeFuncionais[i].getOP() == 'ld' and count == 0:
+                        self.getOP(
+                            unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                        unidadeFuncionais[i].setExecuted(True)
+                    elif unidadeFuncionais[i].getOP() == 'addd' or unidadeFuncionais[i].getOP() == 'subd':
+                        if count == 1:
+                            self.getOP(
+                                unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                            unidadeFuncionais[i].setExecuted(True)
+                            unidadeFuncionais[i].setUsado(True)
+                        elif count < 1:
+                            unidadeFuncionais[i].setUsado(True)
+                            unidadeFuncionais[i].setExecuted(False)
+                    elif unidadeFuncionais[i].getOP() == 'muld':
+                        if count == 9:
+                            unidadeFuncionais[i].setExecuted(True)
+                            self.getOP(
+                                unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                        elif count < 9:
+                            unidadeFuncionais[i].setUsado(True)
+                            unidadeFuncionais[i].setExecuted(False)
+                    elif unidadeFuncionais[i].getOP() == 'divd':
+                        if count == 39:
+                            unidadeFuncionais[i].setExecuted(True)
+                            self.getOP(
+                                unidadeFuncionais[i].getpc()).setExecucaof(clock)
+                        elif count < 39:
+                            unidadeFuncionais[i].setUsado(False)
+                            unidadeFuncionais[i].setExecuted(False)
+        return
+
+    '''
+    Funçao que escreve os resultados das instruções retorna um 
+    registrador que nele contem as UFs e registradores que foram alterados n estágio da escrita
+    '''
+
+    def writeResults(self, clock: int, unidadeFuncionais: List[UnidadeFuncional], registradorEscrita: List[int]):
+        registradorEscrita = []
+        for i in range(len(unidadeFuncionais)):
+            if unidadeFuncionais[i].isBusy():
+                if not self.isWAR(unidadeFuncionais[i], unidadeFuncionais) and not unidadeFuncionais[i].isUsado():
+                    if unidadeFuncionais[i].isExecuted():
+                        self.getOP(
+                            unidadeFuncionais[i].getpc()).setEscrita(clock)
+                        unidadeFuncionais[i].setUsado(True)
+                        for j in range(len(unidadeFuncionais)):
+                            if unidadeFuncionais[j].getqj() == unidadeFuncionais[i].getNome():
+                                unidadeFuncionais[j].setqj('')
+                                unidadeFuncionais[j].setrj(True)
+                                unidadeFuncionais[j].setUsado(True)
+                            if unidadeFuncionais[j].getqk() == unidadeFuncionais[i].getNome():
+                                unidadeFuncionais[j].setqk('')
+                                unidadeFuncionais[j].setrk(True)
+                                unidadeFuncionais[j].setUsado(True)
+                        self.setReg(int(
+                            re.sub('[^0-9]', '', unidadeFuncionais[i].getfi())), '')
+                        registradorEscrita.append(int(
+                            re.sub('[^0-9]', '', unidadeFuncionais[i].getfi())))
+                        unidadeFuncionais[i].reset()
+        return
+    '''
+    Funçao qeu simula o Bookkeeping
+    '''
+
+    def bookkeeping(self, unidadeFuncionais: List[UnidadeFuncional], clock: int, registradores: bancoRegistradores):
+        self.writeResults(clock, unidadeFuncionais,
+                          registradores.getRegEscrita())
+        self.execution(clock, unidadeFuncionais)
+        self.read_operands(clock, unidadeFuncionais)
+        self.issue(registradores.getReBusca(), unidadeFuncionais,
+                   registradores.getPC(), clock, registradores.getRegEscrita())
