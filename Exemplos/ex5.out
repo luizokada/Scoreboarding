@@ -251,7 +251,7 @@ FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
 Mult1  |False  |       |       |       |       |       |       |True   |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
-Add    |True   |addd   |r10    |r3     |r4     |       |       |True   |True   |
+Add    |True   |addd   |r10    |r3     |r4     |Integer|       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
@@ -347,7 +347,7 @@ Integer|False  |       |       |       |       |       |       |True   |True   |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -372,7 +372,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |True   |True   |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -397,7 +397,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -422,7 +422,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -447,7 +447,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -472,7 +472,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -497,7 +497,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -522,7 +522,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -547,7 +547,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |False  |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -572,7 +572,7 @@ Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
 Mult1  |False  |       |       |       |       |       |       |True   |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
-Divide |True   |divd   |r11    |r10    |r3     |       |       |True   |True   |
+Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |True   |True   |
 
 ------------------------------------------------Status Registradores-------------------------------------------------
     |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |
@@ -1934,7 +1934,7 @@ addd  |r2    |r9    |r1    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |True   |True   |
+Mult1  |True   |muld   |r3     |r5     |r8     |Integer|       |True   |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r1     |r2     |r7     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |

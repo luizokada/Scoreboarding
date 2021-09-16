@@ -292,6 +292,8 @@ class Scoreboarding:
                             unidadeFuncionais[UF].getpc()).setLeitura(clock)
                         unidadeFuncionais[UF].setrj(False)
                         unidadeFuncionais[UF].setrk(False)
+                        unidadeFuncionais[UF].setqj('')
+                        unidadeFuncionais[UF].setqk('')
                         unidadeFuncionais[UF].setUsado(True)
                         aux = barramentoRead()
                         aux.setfi(unidadeFuncionais[UF].getInstrucao().getfi())
@@ -383,11 +385,9 @@ class Scoreboarding:
                         unidadeFuncionais[UF].setUsado(True)
                         for j in range(len(unidadeFuncionais)):
                             if unidadeFuncionais[j].getqj() == unidadeFuncionais[UF].getNome():
-                                unidadeFuncionais[j].setqj('')
                                 unidadeFuncionais[j].setrj(True)
                                 unidadeFuncionais[j].setUsado(True)
                             if unidadeFuncionais[j].getqk() == unidadeFuncionais[UF].getNome():
-                                unidadeFuncionais[j].setqk('')
                                 unidadeFuncionais[j].setrk(True)
                                 unidadeFuncionais[j].setUsado(True)
                         self.setReg(
