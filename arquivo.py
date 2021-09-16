@@ -26,7 +26,8 @@ def verificaOperandos(memoria):
                  'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12', 'rb']
     for i in range(len(memoria)):
         if len(memoria[i][1]) < 2:
-            print("Arquivo de entrada com operandos errados")
+            print(
+                "Arquivo de entrada com operandos errados linha: {:3}".format(str(i+1)))
             exit()
         else:
             if memoria[i][0] == 'ld':
@@ -37,22 +38,26 @@ def verificaOperandos(memoria):
                 try:
                     memoria[i][1].append(aux[1])
                 except IndexError:
-                    print("sintaxe de uma instrucao ld esta errada")
+                    print(
+                        "sintaxe de uma instrucao ld esta erradalinha: {:3}".format(str(i+1)))
                     exit()
             for j in range(len(memoria[i][1])):
                 memoria[i][1][j] = memoria[i][1][j].strip()
                 if len(memoria[i][1]) > 3:
-                    print("Arquivo de entrada com operandos errados")
+                    print(
+                        "Arquivo de entrada com operandos errados{:3}".format(str(i+1)))
                     exit()
                 elif memoria[i][1][j] not in operandos:
                     if memoria[i][0] == 'ld':
                         try:
                             int(memoria[i][1][1])
                         except ValueError:
-                            print("Arquivo de entrada com operandos errados")
+                            print(
+                                "Arquivo de entrada com operandos errados linha: {:3}".format(str(i+1)))
                             exit()
                     else:
-                        print("Arquivo de entrada com operandos errados")
+                        print(
+                            "Arquivo de entrada com operandos errados linha: {:3}".format(str(i+1)))
                         exit()
 
     return
@@ -67,7 +72,10 @@ e inicializa um arquivo em branco que será a saida
 def lerArq(nome_arq: str) -> Tuple[str, List[str]]:
     try:
         arquivo = open(nome_arq, 'r')
-        memoria = arquivo.read().splitlines()
+        memoria = []
+        for lines in arquivo:
+            if lines != '\n':
+                memoria.append(lines)
         for i in range(len(memoria)):
             memoria[i] = memoria[i].split(' ', 1)
             memoria[i][1] = memoria[i][1].split(',')
@@ -126,10 +134,14 @@ def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], instr
     for i in range(len(unidadesFuncionais)):
         arquivo.write("{:7}".format(unidadesFuncionais[i].getNome())+"|")
         arquivo.write("{:7}".format(str(unidadesFuncionais[i].isBusy()))+"|")
-        arquivo.write("{:7}".format(unidadesFuncionais[i].getOP())+"|")
-        arquivo.write("{:7}".format(unidadesFuncionais[i].getfi())+"|")
-        arquivo.write("{:7}".format(unidadesFuncionais[i].getfj())+"|")
-        arquivo.write("{:7}".format(unidadesFuncionais[i].getfk())+"|")
+        arquivo.write("{:7}".format(
+            unidadesFuncionais[i].getInstrucao().getOP())+"|")
+        arquivo.write("{:7}".format(
+            unidadesFuncionais[i].getInstrucao().getfi())+"|")
+        arquivo.write("{:7}".format(
+            unidadesFuncionais[i].getInstrucao().getfj())+"|")
+        arquivo.write("{:7}".format(
+            unidadesFuncionais[i].getInstrucao().getfk())+"|")
         arquivo.write("{:7}".format(unidadesFuncionais[i].getqj())+"|")
         arquivo.write("{:7}".format(unidadesFuncionais[i].getqk())+"|")
         arquivo.write("{:7}".format(str(unidadesFuncionais[i].isrj()))+"|")

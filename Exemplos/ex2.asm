@@ -1,5 +1,14 @@
+ld r1, (10)rb
+ld r2, (-100)rb
+ld r3, (16)rb
+addd r10, r3, r4
+muld r3, r4, r5 
+divd r11, r10, r3
+ld r10, (25)rb
 divd r3, r1, r2
-muld r1, r10, r5
-addd r5, r3, r2
-ld r1, (-10)rb
-subd r12, r1, r5
+addd r0, r3, r5
+ld r5, (29)rb
+muld r9, r8, r10
+addd r5, r4, r0
+ld r0, (-10)rb
+subd r3, r0, r10

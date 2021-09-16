@@ -1,6 +1,7 @@
+
 import sys
 from typing import List, Tuple
-from instrucao import instrucao
+from instrucao import instrucao, instrucaoStatus
 from componentes import Scoreboarding, UnidadeFuncional, bancoRegistradores
 from arquivo import writestatus, lerArq
 
@@ -34,13 +35,17 @@ class processador:
     Verifica se o pipiline está vazio
     '''
 
-    def isVazio(self, unidadesFuncionais: List[UnidadeFuncional], memoria, pc: int) -> bool:
+    def isVazio(self, instrucoes: List[instrucaoStatus], memoria, pc: int) -> bool:
         if pc+1 < len(memoria):
             return True
-        for i in range(len(unidadesFuncionais)):
-            if unidadesFuncionais[i].isBusy():
+        for i in range(len(instrucoes)):
+            if instrucoes[i].getEscrita() == -1:
                 return True
         return False
+    """
+    Funçao que seta a flag Usado das UFS como False pois começou um novo cilco
+    
+    """
 
     def novoCiclo(self, unidadeFuncionais: List[UnidadeFuncional]):
         for uf in unidadeFuncionais:
@@ -52,7 +57,7 @@ class processador:
     retorna o registrador que dentro dele tem a próxima instrução que deve ser emitida
     '''
 
-    def buscaOp(self, memoria, operacoes: List[instrucao], registradores: bancoRegistradores, issued: bool):
+    def buscaOp(self, memoria, instrucoes: List[instrucaoStatus], registradores: bancoRegistradores, issued: bool):
         # tratamento para o primeiro ciclo de clock quando nao se tem nada no pipeline
         if registradores.getPC() == 0 and not issued:
             registradores.getReBusca().setOP(memoria[registradores.getPC()][0])
@@ -62,7 +67,8 @@ class processador:
                 memoria[registradores.getPC()][1][1].strip())
             registradores.getReBusca().setfk(
                 memoria[registradores.getPC()][1][2].strip())
-            operacoes[0] = registradores.getReBusca()
+            aux = instrucaoStatus(registradores.getReBusca())
+            instrucoes[0] = aux
         elif registradores.getPC() < len(memoria) and issued:
             registradores.setReBusca(instrucao())
             if registradores.getPC()+1 < len(memoria):
@@ -74,7 +80,8 @@ class processador:
                     memoria[registradores.getPC()+1][1][1].strip())
                 registradores.getReBusca().setfk(
                     memoria[registradores.getPC()+1][1][2].strip())
-                operacoes.append(registradores.getReBusca())
+                aux = instrucaoStatus(registradores.getReBusca())
+                instrucoes.append(aux)
                 registradores.setPC(registradores.getPC()+1)
             else:
                 registradores.setPC(registradores.getPC()+1)
@@ -88,7 +95,7 @@ class processador:
     '''
 
     def pipeline(self, memoria: Tuple[str, List[str]]):
-        while self.isVazio(self.unidadeFuncionais, memoria, self.registradores.getPC()):
+        while self.isVazio(self.scoreboard.getOPs(), memoria, self.registradores.getPC()):
             self.clock = self.clock+1
             self.novoCiclo(self.unidadeFuncionais)
             self.scoreboard.bookkeeping(

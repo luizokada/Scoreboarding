@@ -9,11 +9,6 @@ class instrucao:
         self.fi = ''         # registrador destino
         self.fj = ''         # operando 1
         self.fk = ''         # operando 2
-        self.issue = -1      # clock da emissao
-        self.leitura = -1    # clock da leitura
-        self.execucaoi = -1  # clock do inicio da execucao
-        self.execucaof = -1  # clock do termino da execucao
-        self.escrita = -1    # clock da escrita
     '''
     Sets e gets dessa classe
     '''
@@ -41,6 +36,27 @@ class instrucao:
 
     def getfk(self) -> str:
         return self.fk
+
+    '''
+    Verifica se não existe operação
+    '''
+
+    def isVazio(self):
+        return self.op == ''
+
+
+class instrucaoStatus(instrucao):
+    def __init__(self, instrucao: instrucao) -> None:
+        super().__init__()
+        self.fi = instrucao.getfi()
+        self.fj = instrucao.getfj()
+        self.fk = instrucao.getfk()
+        self.op = instrucao.getOP()
+        self.issue = -1      # clock da emissao
+        self.leitura = -1    # clock da leitura
+        self.execucaoi = -1  # clock do inicio da execucao
+        self.execucaof = -1  # clock do termino da execucao
+        self.escrita = -1    # clock da escrita
 
     def setIssue(self, issue: int):
         self.issue = issue
@@ -71,16 +87,6 @@ class instrucao:
 
     def setEscrita(self, escrita: int):
         self.escrita = escrita
-    '''
-    Verifica se não existe operação
-    '''
-
-    def isVazio(self):
-        if self.op == '':
-            return True
-        else:
-            return False
-        pass
 
 
 """
@@ -88,12 +94,9 @@ Barramentos entre os estagios do pipeline
 """
 
 
-class barramentoIssue:
+class barramentoIssue(instrucao):
     def __init__(self) -> None:
-        self.op = ''         # OP que esta na unidade funcional
-        self.fi = ''         # registrador destino
-        self.fj = ''         # operando 1
-        self.fk = ''         # operando 2
+        super().__init__()
         self.UF = -1
         pass
     '''
@@ -112,30 +115,6 @@ class barramentoIssue:
 
     def setUF(self, UF: int):
         self.UF = UF
-
-    def setOP(self, OP: str):
-        self.op = OP
-
-    def getOP(self) -> str:
-        return self.op
-
-    def setfi(self, fi):
-        self.fi = fi
-
-    def getfi(self) -> str:
-        return self.fi
-
-    def setfj(self, fj):
-        self.fj = fj
-
-    def getfj(self) -> str:
-        return self.fj
-
-    def setfk(self, fk):
-        self.fk = fk
-
-    def getfk(self) -> str:
-        return self.fk
 
     def isVazio(self):
         return self.UF == -1
