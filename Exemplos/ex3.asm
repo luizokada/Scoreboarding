@@ -13,11 +13,11 @@ ld r11, (2)rb
 ld r12, (0)rb
 addd r1, r2, r3
 subd r10, r11, r5
-muld r8, r7, r6
+multd r8, r7, r6
 addd r9, r12, r3
 divd r10, r8, r2
-muld r8, r7, r0
-muld r9, r1, r5
-muld r3, r4, r7
+multd r8, r7, r0
+multd r9, r1, r5
+multd r3, r4, r7
 addd r7, r8, r3
 subd r6, r4, r9
