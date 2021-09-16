@@ -293,7 +293,7 @@ class Scoreboarding:
                         unidadeFuncionais[UF].setrj(False)
                         unidadeFuncionais[UF].setrk(False)
                         unidadeFuncionais[UF].setqj('')
-                        unidadeFuncionais[j].setqk('')
+                        unidadeFuncionais[UF].setqk('')
                         unidadeFuncionais[UF].setUsado(True)
                         aux = barramentoRead()
                         aux.setfi(unidadeFuncionais[UF].getInstrucao().getfi())
