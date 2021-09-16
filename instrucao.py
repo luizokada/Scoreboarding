@@ -82,6 +82,104 @@ class instrucao:
             return False
         pass
 
-    class barramentoIssue:
-        def __init__(self) -> None:
-            pass
+
+"""
+Barramentos entre os estagios do pipeline
+"""
+
+
+class barramentoIssue:
+    def __init__(self) -> None:
+        self.op = ''         # OP que esta na unidade funcional
+        self.fi = ''         # registrador destino
+        self.fj = ''         # operando 1
+        self.fk = ''         # operando 2
+        self.UF = -1
+        pass
+    '''
+    retira os dados do barramento pois a instruçao foi para o próximo estágio
+    '''
+
+    def esvazia(self):
+        self.op = ''
+        self.fi = ''
+        self.fj = ''
+        self.fk = ''
+        self.UF = -1
+
+    def getUF(self):
+        return self.UF
+
+    def setUF(self, UF: int):
+        self.UF = UF
+
+    def setOP(self, OP: str):
+        self.op = OP
+
+    def getOP(self) -> str:
+        return self.op
+
+    def setfi(self, fi):
+        self.fi = fi
+
+    def getfi(self) -> str:
+        return self.fi
+
+    def setfj(self, fj):
+        self.fj = fj
+
+    def getfj(self) -> str:
+        return self.fj
+
+    def setfk(self, fk):
+        self.fk = fk
+
+    def getfk(self) -> str:
+        return self.fk
+
+    def isVazio(self):
+        return self.UF == -1
+
+
+class barramentoRead(barramentoIssue):
+
+    def __init__(self) -> None:
+        super().__init__()
+        pass
+
+
+class barramentoExecute:
+    def __init__(self) -> None:
+        self.result = ''  # resultado da execuçao da instrucao
+        self.UF = -1  # UF que esta a intrucao
+        self.fi = ''  # registrador destino
+        pass
+    '''
+    retira os dados do barramento pois a instruçao foi para o próximo estágio
+    '''
+
+    def esvazia(self):
+        self.result = ''
+        self.UF = -1
+        self.fi = ''
+
+    def getResult(self):
+        return self.UF
+
+    def setResult(self, result):
+        self.result = result
+
+    def getUF(self):
+        return self.UF
+
+    def setUF(self, UF: int):
+        self.UF = UF
+
+    def setfi(self, fi):
+        self.fi = fi
+
+    def getfi(self) -> str:
+        return self.fi
+
+    def isVazio(self):
+        return self.UF == -1
