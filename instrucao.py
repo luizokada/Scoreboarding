@@ -81,3 +81,7 @@ class instrucao:
         else:
             return False
         pass
+
+    class barramentoIssue:
+        def __init__(self) -> None:
+            pass
