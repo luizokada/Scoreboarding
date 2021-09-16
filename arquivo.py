@@ -94,156 +94,58 @@ def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], instr
     saida = saida+'.out'
     arquivo = open(saida, 'a')
     arquivo.writelines('Clock:'+str(clock)+'\n')
-    arquivo.write(
-        '--------------------------------Status operacoes-------------------------------------\n')
-    arquivo.write(
-        'OP    |Fi  |Fj  |Fk  |issue\t\t|read\t\t|Execution\t|write\t\t|\n')
-
+    arquivo.write('{:-^96}\n'.format('Status Operacoes'))
+    estagios = ['issue', 'read', 'execution', 'Write']
+    statusOP = ['OP', 'Fi', 'Fj', 'Fk']
+    for status in statusOP:
+        arquivo.write("{:6}".format(status)+"|")
+    for estagio in estagios:
+        arquivo.write("{:16}".format(estagio)+"|")
+    arquivo.write('\n')
     for i in range(len(instrucao)):
-        if instrucao[i].getOP() == 'ld':
-            arquivo.write(instrucao[i].getOP()+'    |')
-        else:
-            if instrucao[i].getOP() == 'multd':
-                arquivo.write(instrucao[i].getOP()+' |')
-            else:
-                arquivo.write(instrucao[i].getOP()+'  |')
-        if abs(int(re.sub('[^0-9]', '', instrucao[i].getfi()))) > 9:
-            arquivo.write(instrucao[i].getfi()+' |')
-        else:
-            arquivo.write(instrucao[i].getfi()+'  |')
-        if abs(int(re.sub('[^0-9]', '', instrucao[i].getfj()))) > 9:
-            arquivo.write(instrucao[i].getfj()+' |')
-        else:
-            arquivo.write(instrucao[i].getfj()+'  |')
-        if instrucao[i].getfk() != 'rb':
-            if abs(int(re.sub('[^0-9]', '', instrucao[i].getfk()))) > 9:
-                arquivo.write(instrucao[i].getfk()+' |')
-            else:
-                arquivo.write(instrucao[i].getfk()+'  |')
-        else:
-            arquivo.write(instrucao[i].getfk()+'  |')
-        if instrucao[i].getIssue() != -1:
-            arquivo.write('\t\t'+str(instrucao[i].getIssue())+'\t|')
-        else:
-            arquivo.write('     ')
-        if instrucao[i].getLeitura() != -1:
-            arquivo.write(str(instrucao[i].getLeitura())+'\t\t|')
-        else:
-            arquivo.write('\t\t|')
-        if instrucao[i].getExecucaoi() != -1:
-            if instrucao[i].getExecucaof() != -1:
-                arquivo.write(str(instrucao[i].getExecucaoi()) +
-                              '-'+str(instrucao[i].getExecucaof())+'\t\t|')
-            else:
-                arquivo.write(str(instrucao[i].getExecucaoi()) +
-                              ' - \t\t|')
-        else:
-            arquivo.write('\t\t|')
-        if instrucao[i].getEscrita() != -1:
-            arquivo.write(str(instrucao[i].getEscrita())+'\t\t|'+'\n')
-        else:
-            arquivo.write('\t\t|\n')
+        arquivo.write("{:6}".format(instrucao[i].getOP())+"|")
+        arquivo.write("{:6}".format(instrucao[i].getfi())+"|")
+        arquivo.write("{:6}".format(instrucao[i].getfj())+"|")
+        arquivo.write("{:6}".format(instrucao[i].getfk())+"|")
+        arquivo.write('{:16}'.format(
+            str(instrucao[i].getIssue()).replace('-1', ' '))+'|')
+        arquivo.write('{:16}'.format(
+            str(instrucao[i].getLeitura()).replace('-1', ' '))+'|')
+        execucao = str(instrucao[i].getExecucaoi()).replace("-1", ' ')
+        execucao = execucao+" - "
+        execucao = execucao+str(instrucao[i].getExecucaof()).replace("-1", ' ')
+        arquivo.write('{:^16}'.format(execucao)+'|')
+        arquivo.write('{:16}'.format(
+            str(instrucao[i].getEscrita()).replace('-1', ' '))+'|\n')
     arquivo.write('\n')
-    arquivo.write(
-        '------------------------Status Unidades Funcionais-------------------------\n')
-    arquivo.write('FU     |'+' Busy\t|' +
-                  'OP    |'+'Fi  |'+'Fj  |'+'Fk  |'+'Qj       |'+'Qk       |'+'Rj     |'+'Rk     |'+'\n')
+    arquivo.write("{:-^80}".format("Status Unidades funcionais")+'\n')
+    ufstatus = ['FU', 'Busy', 'OP', 'Fi', 'Fj', 'Fk', 'Qj', 'Qk', 'Rj', 'Rk']
+    for status in ufstatus:
+        arquivo.write("{:7}".format(status)+"|")
+    arquivo.write('\n')
     for i in range(len(unidadesFuncionais)):
-        if i == 3:
-            arquivo.write(unidadesFuncionais[i].getNome()+'    |')
-        elif i == 0:
-            arquivo.write(unidadesFuncionais[i].getNome()+'|')
-        elif i == 4:
-            arquivo.write(unidadesFuncionais[i].getNome()+' |')
-        else:
-            arquivo.write(unidadesFuncionais[i].getNome()+'  |')
-        if unidadesFuncionais[i].isBusy():
-            arquivo.write(str(unidadesFuncionais[i].isBusy())+'\t|')
-            if i == 1 or i == 2:
-                arquivo.write(unidadesFuncionais[i].getOP()+'  |')
-            elif i == 0:
-                arquivo.write(unidadesFuncionais[i].getOP()+'    |')
-            else:
-                arquivo.write(unidadesFuncionais[i].getOP()+'  |')
-            if abs(int(re.sub('[^0-9]', '', unidadesFuncionais[i].getfi()))) > 9:
-                arquivo.write(unidadesFuncionais[i].getfi()+' |')
-            else:
-                arquivo.write(unidadesFuncionais[i].getfi()+'  |')
-            if unidadesFuncionais[i].getfj() == '':
-                arquivo.write('\t |')
-            else:
-                if abs(int(re.sub('[^0-9]', '', unidadesFuncionais[i].getfj()))) > 9:
-                    arquivo.write(unidadesFuncionais[i].getfj()+' |')
-                else:
-                    arquivo.write(unidadesFuncionais[i].getfj()+'  |')
-            if unidadesFuncionais[i].getfk() != 'rb':
-                if abs(int(re.sub('[^0-9]', '', unidadesFuncionais[i].getfk()))) > 9:
-                    arquivo.write(unidadesFuncionais[i].getfk()+' |')
-                else:
-                    arquivo.write(unidadesFuncionais[i].getfk()+'  |')
-            else:
-                arquivo.write(unidadesFuncionais[i].getfk()+'  |')
-            if unidadesFuncionais[i].getqj() == '':
-                arquivo.write('         |')
-            else:
-                if unidadesFuncionais[i].getqj() == 'Integer':
-                    arquivo.write(unidadesFuncionais[i].getqj()+'  |')
-                elif unidadesFuncionais[i].getqj() == 'Divide':
-                    arquivo.write(unidadesFuncionais[i].getqj()+'   |')
-                elif unidadesFuncionais[i].getqj() == 'Mult1' or unidadesFuncionais[i].getqj() == 'Mult2':
-                    arquivo.write(unidadesFuncionais[i].getqj()+'    |')
-                elif unidadesFuncionais[i].getqj() == 'Add':
-                    arquivo.write(unidadesFuncionais[i].getqj()+'      |')
-            if unidadesFuncionais[i].getqk() == '':
-                arquivo.write('         |')
-            else:
-                if unidadesFuncionais[i].getqk() == 'Integer':
-                    arquivo.write(unidadesFuncionais[i].getqk()+'  |')
-                elif unidadesFuncionais[i].getqk() == 'Divide':
-                    arquivo.write(unidadesFuncionais[i].getqk()+'   |')
-                elif unidadesFuncionais[i].getqk() == 'Mult1' or unidadesFuncionais[i].getqk() == 'Mult2':
-                    arquivo.write(unidadesFuncionais[i].getqk()+'    |')
-                elif unidadesFuncionais[i].getqk() == 'Add':
-                    arquivo.write(unidadesFuncionais[i].getqk()+'      |')
-            if unidadesFuncionais[i].isrj():
-                arquivo.write(str(unidadesFuncionais[i].isrj())+'   |')
-            else:
-                arquivo.write(str(unidadesFuncionais[i].isrj())+'  |')
-            if unidadesFuncionais[i].isrk():
-                arquivo.write(str(unidadesFuncionais[i].isrk())+'   |\n')
-            else:
-                arquivo.write(str(unidadesFuncionais[i].isrk())+'  |\n')
-
-        else:
-            arquivo.write(str(unidadesFuncionais[i].isBusy())+'\t|')
-            arquivo.write('      |')
-            arquivo.write('    |')
-            arquivo.write('    |')
-            arquivo.write('    |')
-            arquivo.write('         |')
-            arquivo.write('         |')
-            arquivo.write('       |')
-            arquivo.write('       |')
-            arquivo.write('\n')
-
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getNome())+"|")
+        arquivo.write("{:7}".format(str(unidadesFuncionais[i].isBusy()))+"|")
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getOP())+"|")
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getfi())+"|")
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getfj())+"|")
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getfk())+"|")
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getqj())+"|")
+        arquivo.write("{:7}".format(unidadesFuncionais[i].getqk())+"|")
+        arquivo.write("{:7}".format(str(unidadesFuncionais[i].isrj()))+"|")
+        arquivo.write("{:7}".format(str(unidadesFuncionais[i].isrk()))+"|")
+        arquivo.write('\n')
     arquivo.write('\n')
-    arquivo.write(
-        '----------------------------------------------Status Registradores--------------------------------------------------\n')
-    arquivo.write(
-        '    |R0     |R1     |R2     |R3     |R4     |R5     |R6     |R7     |R8     |R9     |R10    |R11    |R12    |RB     |\n')
+    arquivo.write('{:-^117}\n'.format('Status Registradores'))
+    regs = ['R0', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6',
+            'R7', 'R8', 'R9', 'R10', 'R11', 'R12', 'RB']
+    arquivo.write('    |')
+    for r in regs:
+        arquivo.write("{:7}".format(r)+"|")
+    arquivo.write('\n')
     arquivo.write('UF  |')
     for i in range(len(registradores)):
-        if registradores[i] == '':
-            arquivo.write('       |')
-        else:
-            if registradores[i] == 'Mult1' or registradores[i] == 'Mult2':
-                arquivo.write(registradores[i]+'  |')
-            elif registradores[i] == 'Add':
-                arquivo.write(registradores[i]+'    |')
-            elif registradores[i] == 'Divide':
-                arquivo.write(registradores[i]+' |')
-            elif registradores[i] == 'Integer':
-                arquivo.write(registradores[i]+'|')
+        arquivo.write("{:7}".format(registradores[i])+"|")
     arquivo.write(
-        '\n--------------------------------------------------------------------------------------------------------------------\n\n')
+        '\n{:-^117}\n\n'.format(''))
     return
