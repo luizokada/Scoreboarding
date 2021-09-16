@@ -88,7 +88,7 @@ Funçao responsável por escrever o arquivo de saida
 '''
 
 
-def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], instrucao: List[instrucao], registradores: List[str], clock: int):
+def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], instrucao: List[instrucao], registradores: dict, clock: int):
     nome_arq = nome_arq.split('.')
     saida = nome_arq[0]
     saida = saida+'.out'
@@ -144,7 +144,7 @@ def writestatus(nome_arq: str, unidadesFuncionais: List[UnidadeFuncional], instr
         arquivo.write("{:7}".format(r)+"|")
     arquivo.write('\n')
     arquivo.write('UF  |')
-    for i in range(len(registradores)):
+    for i in registradores.keys():
         arquivo.write("{:7}".format(registradores[i])+"|")
     arquivo.write(
         '\n{:-^117}\n\n'.format(''))
