@@ -174,11 +174,11 @@ class Scoreboarding:
         # status das instruções que ja passaram do estágio de busca
         self.statusOp = [instrucaoStatus(instrucao())]
         # status dos registradores
-        self.registradores = {'r0': '', 'r1': '', 'r2': '', 'r3': '', 'r4': '', 'r5': '', 'r6': '', 'r7': '',
-                              'r8': '', 'r9': '', 'r10': '', 'r11': '', 'r12': '', 'rb': ''}
+        self.registradores = {'r0': '', 'r1': '', 'r2': '', 'r3': '', 'r4': '', 'r5': '',
+                              'r6': '', 'r7': '', 'r8': '', 'r9': '', 'r10': '', 'r11': '', 'r12': '', 'rb': ''}
         self.issued = False  # variavel que notifica para o processador que foi feito uma emissao
     ''' 
-    Set e gets dessa classe
+    Set e gets dessa classes
     '''
 
     def setIssued(self, issued: bool):
@@ -233,7 +233,7 @@ class Scoreboarding:
         if not registradores.getReBusca().isVazio() and not self.isWAW(registradores.getReBusca(), self.getRegs(), registradores.getRegEscrita()):
             if registradores.getReBusca().getOP() == 'ld':
                 UF = 0
-            elif registradores.getReBusca().getOP() == 'muld':
+            elif registradores.getReBusca().getOP() == 'multd':
                 if not unidadeFuncionais[1].isBusy():
                     UF = 1
                 else:
@@ -346,7 +346,7 @@ class Scoreboarding:
                             registradores.getReRead()[i].esvazia()
                         elif count < 1:
                             unidadeFuncionais[UF].setUsado(True)
-                    elif unidadeFuncionais[UF].getInstrucao().getOP() == 'muld':
+                    elif unidadeFuncionais[UF].getInstrucao().getOP() == 'multd':
                         if count == 9:
                             aux.setResult('resultado')
                             registradores.setReExecute(aux, UF)

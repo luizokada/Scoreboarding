@@ -200,7 +200,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |       -        |                |
 addd  |r10   |r3    |r4    |11              |                |       -        |                |
-muld  |r3    |r4    |r5    |                |                |       -        |                |
+multd |r3    |r4    |r5    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
@@ -222,7 +222,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |                |
 addd  |r10   |r3    |r4    |11              |                |       -        |                |
-muld  |r3    |r4    |r5    |                |                |       -        |                |
+multd |r3    |r4    |r5    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
@@ -244,7 +244,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |                |       -        |                |
-muld  |r3    |r4    |r5    |                |                |       -        |                |
+multd |r3    |r4    |r5    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
@@ -266,13 +266,13 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |       -        |                |
-muld  |r3    |r4    |r5    |14              |                |       -        |                |
+multd |r3    |r4    |r5    |14              |                |       -        |                |
 divd  |r11   |r10   |r3    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |True   |True   |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |True   |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r10    |r3     |r4     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -289,14 +289,14 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |     15 -       |                |
-muld  |r3    |r4    |r5    |14              |15              |       -        |                |
+multd |r3    |r4    |r5    |14              |15              |       -        |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r10    |r3     |r4     |       |       |False  |False  |
 Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |False  |False  |
@@ -313,14 +313,14 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |                |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r10    |r3     |r4     |       |       |False  |False  |
 Divide |True   |divd   |r11    |r10    |r3     |Add    |Mult1  |False  |False  |
@@ -337,14 +337,14 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -361,7 +361,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |                |       -        |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -369,7 +369,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -386,7 +386,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |       -        |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -394,7 +394,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -411,7 +411,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -419,7 +419,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -436,7 +436,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -444,7 +444,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -461,7 +461,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -469,7 +469,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -486,7 +486,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -494,7 +494,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -511,7 +511,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |     16 -       |                |
+multd |r3    |r4    |r5    |14              |15              |     16 -       |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -519,7 +519,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -536,7 +536,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |                |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |                |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -544,7 +544,7 @@ addd  |r10   |r0    |r5    |                |                |       -        | 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r10    |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r4     |r5     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r4     |r5     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |True   |divd   |r11    |r10    |r3     |       |Mult1  |True   |False  |
@@ -561,7 +561,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |                |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -586,7 +586,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |       -        |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |                |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -611,7 +611,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |                |                |       -        |                |
@@ -636,7 +636,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |                |       -        |                |
@@ -662,7 +662,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |       -        |                |
@@ -688,7 +688,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |     31 -       |                |
@@ -714,7 +714,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |                |
@@ -740,7 +740,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -766,7 +766,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -793,7 +793,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -820,7 +820,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -847,7 +847,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -874,7 +874,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -901,7 +901,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -928,7 +928,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -955,7 +955,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -982,7 +982,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1009,7 +1009,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1036,7 +1036,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1063,7 +1063,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1090,7 +1090,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1117,7 +1117,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1144,7 +1144,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1171,7 +1171,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1198,7 +1198,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1225,7 +1225,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1252,7 +1252,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1279,7 +1279,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1306,7 +1306,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1333,7 +1333,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1360,7 +1360,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1387,7 +1387,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1414,7 +1414,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1441,7 +1441,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1468,7 +1468,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1495,7 +1495,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1522,7 +1522,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1549,7 +1549,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1576,7 +1576,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1603,7 +1603,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1630,7 +1630,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |     28 -       |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1657,7 +1657,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |                |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1684,7 +1684,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1711,7 +1711,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1739,7 +1739,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1768,7 +1768,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1797,7 +1797,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1826,7 +1826,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1834,7 +1834,7 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |                |
 ld    |r5    |-9    |rb    |73              |                |       -        |                |
-muld  |r3    |r5    |r8    |                |                |       -        |                |
+multd |r3    |r5    |r8    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
@@ -1856,7 +1856,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1864,13 +1864,13 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |       -        |                |
-muld  |r3    |r5    |r8    |74              |                |       -        |                |
+multd |r3    |r5    |r8    |74              |                |       -        |                |
 addd  |r1    |r2    |r7    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r5     |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r5     |r8     |Integer|       |False  |True   |
+Mult1  |True   |multd  |r3     |r5     |r8     |Integer|       |False  |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -1887,7 +1887,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1895,14 +1895,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |                |
-muld  |r3    |r5    |r8    |74              |                |       -        |                |
+multd |r3    |r5    |r8    |74              |                |       -        |                |
 addd  |r1    |r2    |r7    |75              |                |       -        |                |
 addd  |r2    |r9    |r1    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|True   |ld     |r5     |       |rb     |       |       |False  |False  |
-Mult1  |True   |muld   |r3     |r5     |r8     |Integer|       |False  |True   |
+Mult1  |True   |multd  |r3     |r5     |r8     |Integer|       |False  |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r1     |r2     |r7     |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -1919,7 +1919,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1927,14 +1927,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |                |       -        |                |
+multd |r3    |r5    |r8    |74              |                |       -        |                |
 addd  |r1    |r2    |r7    |75              |76              |       -        |                |
 addd  |r2    |r9    |r1    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |True   |True   |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |True   |True   |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r1     |r2     |r7     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -1951,7 +1951,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1959,14 +1959,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |       -        |                |
+multd |r3    |r5    |r8    |74              |77              |       -        |                |
 addd  |r1    |r2    |r7    |75              |76              |     77 -       |                |
 addd  |r2    |r9    |r1    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r1     |r2     |r7     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -1983,7 +1983,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -1991,14 +1991,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |                |
 addd  |r2    |r9    |r1    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r1     |r2     |r7     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2015,7 +2015,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2023,14 +2023,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |                |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2047,7 +2047,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2055,14 +2055,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |                |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r2     |r9     |r1     |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2079,7 +2079,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2087,14 +2087,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |       -        |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r2     |r9     |r1     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2111,7 +2111,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2119,14 +2119,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |     82 -       |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r2     |r9     |r1     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2143,7 +2143,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2151,14 +2151,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |                |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |True   |addd   |r2     |r9     |r1     |       |       |False  |False  |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2175,7 +2175,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2183,14 +2183,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |84              |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2207,7 +2207,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2215,14 +2215,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |84              |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2239,7 +2239,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2247,14 +2247,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |     78 -       |                |
+multd |r3    |r5    |r8    |74              |77              |     78 -       |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |84              |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2271,7 +2271,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2279,14 +2279,14 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |    78 - 87     |                |
+multd |r3    |r5    |r8    |74              |77              |    78 - 87     |                |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |84              |
 
 ---------------------------Status Unidades funcionais---------------------------
 FU     |Busy   |OP     |Fi     |Fj     |Fk     |Qj     |Qk     |Rj     |Rk     |
 Integer|False  |       |       |       |       |       |       |True   |True   |
-Mult1  |True   |muld   |r3     |r5     |r8     |       |       |False  |False  |
+Mult1  |True   |multd  |r3     |r5     |r8     |       |       |False  |False  |
 Mult2  |False  |       |       |       |       |       |       |True   |True   |
 Add    |False  |       |       |       |       |       |       |True   |True   |
 Divide |False  |       |       |       |       |       |       |True   |True   |
@@ -2303,7 +2303,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2311,7 +2311,7 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |    78 - 87     |88              |
+multd |r3    |r5    |r8    |74              |77              |    78 - 87     |88              |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |84              |
 
@@ -2335,7 +2335,7 @@ ld    |r1    |10    |rb    |2               |3               |     4 - 4      |5
 ld    |r2    |-10   |rb    |6               |7               |     8 - 8      |9               |
 ld    |r3    |25    |rb    |10              |11              |    12 - 12     |13              |
 addd  |r10   |r3    |r4    |11              |14              |    15 - 16     |17              |
-muld  |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
+multd |r3    |r4    |r5    |14              |15              |    16 - 25     |26              |
 divd  |r11   |r10   |r3    |15              |27              |    28 - 67     |68              |
 ld    |r10   |100   |rb    |18              |19              |    20 - 20     |28              |
 addd  |r10   |r0    |r5    |29              |30              |    31 - 32     |33              |
@@ -2343,7 +2343,7 @@ ld    |r10   |-15   |rb    |34              |35              |    36 - 36     |3
 ld    |r11   |50    |rb    |69              |70              |    71 - 71     |72              |
 addd  |r1    |r7    |r9    |70              |71              |    72 - 73     |74              |
 ld    |r5    |-9    |rb    |73              |74              |    75 - 75     |76              |
-muld  |r3    |r5    |r8    |74              |77              |    78 - 87     |88              |
+multd |r3    |r5    |r8    |74              |77              |    78 - 87     |88              |
 addd  |r1    |r2    |r7    |75              |76              |    77 - 78     |79              |
 addd  |r2    |r9    |r1    |80              |81              |    82 - 83     |84              |
 

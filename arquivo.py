@@ -9,7 +9,7 @@ Verifica se o arquivo de entrada possui a sintaxe das instruçoes correta
 
 
 def verificaOP(memoria):
-    operacoes = ['ld', 'muld', 'addd', 'subd', 'divd']
+    operacoes = ['ld', 'multd', 'addd', 'subd', 'divd']
     for i in range(len(memoria)):
         if memoria[i][0] not in operacoes:
             print("arquivo de entrada com sintaxe errada")
