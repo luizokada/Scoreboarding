@@ -9,7 +9,7 @@ a) Instruções
 
 ld d, (offset)rb
 
-muld d, o1, o2
+multd d, o1, o2
 
 divd d, o1, o2
 
@@ -35,7 +35,7 @@ b) Latência da instruções
 
 ld → 1 ciclo
 
-muld → 10 ciclos
+multd → 10 ciclos
 
 divd → 40 ciclos
 
