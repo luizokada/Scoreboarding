@@ -1,4 +1,4 @@
-# ARQIITrabI
+# ScoreBoarding
 Escalonamento Dinâmico
 Simulador de Scoreboarding
 Para esta tarefa você deve implementar um simulador de Scoreboarding.
